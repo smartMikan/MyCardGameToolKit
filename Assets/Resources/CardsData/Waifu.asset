@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a3ecdabc73b4340888c2c8a7e7ef07, type: 3}
+  m_Name: Waifu
+  m_EditorClassIdentifier: 
+  cardType: {fileID: 11400000, guid: 32a28df3d8349404bb6d50d395239c75, type: 2}
+  properties:
+  - stringValue: Waifu
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: c2066679867aacc4fa48820eb406ebaa, type: 2}
+  - stringValue: Croz
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 0d5019aa4e20aa842a3220668539c2ef, type: 2}
+  - stringValue: Target Character Lose 3 Life
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 8ea43c18b35b52c4d86d2c7b1b543019, type: 2}
+  - stringValue: '"did you love sugar?"'
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 05b6b48ac54cf674fb2c5ee2db826634, type: 2}
+  - stringValue: 
+    intValue: 0
+    sprite: {fileID: 21300000, guid: e676bac4019471047ae1fb3875aaa160, type: 3}
+    element: {fileID: 11400000, guid: 536fc9dff63b0d14c9eaebaba61f2843, type: 2}
+  - stringValue: 
+    intValue: 2
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 18acbbb5256e1404896cc7c78c04859a, type: 2}
+  - stringValue: 
+    intValue: 50
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: a15cbe9a090f5974bb5398d22418fbc4, type: 2}
+  - stringValue: 
+    intValue: 50
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 92c49789eb3675b48b947f47cbad77c3, type: 2}

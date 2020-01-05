@@ -5,5 +5,6 @@ using UnityEngine.EventSystems;
 
 public interface IPointerDragInterface : IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IPointerClickHandler
 {
-    
+
+
 }
