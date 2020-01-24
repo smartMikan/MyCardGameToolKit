@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: ResourcesManager
   m_EditorClassIdentifier: 
   typeElement: {fileID: 11400000, guid: ba9ace34ff341594e9a564da130ac435, type: 2}
+  allCards:
+  - {fileID: 11400000, guid: 8b0f3e218a93b704881143ec8a0bbb4e, type: 2}
+  - {fileID: 11400000, guid: 8fdf6bed352b7c740a9a0bc56cf8a68f, type: 2}
+  - {fileID: 11400000, guid: 0ea801600b6d1154d9bcf08abb742e95, type: 2}

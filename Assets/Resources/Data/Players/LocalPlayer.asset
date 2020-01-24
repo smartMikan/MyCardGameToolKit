@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a757816a34e404ab3d59190a645997, type: 3}
+  m_Name: LocalPlayer
+  m_EditorClassIdentifier: 
+  username: Player
+  startingCards:
+  - LifeSpring
+  - Waifu
+  - Waifu
+  - SakuraTree
+  handGrid: {fileID: 11400000, guid: 0b73d9c91e7521e4bbd0e89f0a1d1fde, type: 2}
+  downGrid: {fileID: 11400000, guid: 29b429ca0492d1649ab059ff945443f7, type: 2}
+  handLogic: {fileID: 11400000, guid: 4d7e6937fde6ac447b9bd21def99cc5b, type: 2}
+  downLogic: {fileID: 11400000, guid: 9654f6cb1c8df9848ba731c610875ebe, type: 2}
