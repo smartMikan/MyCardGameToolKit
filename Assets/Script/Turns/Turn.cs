@@ -42,6 +42,14 @@ namespace Oukanu
 
             return result;
         }
+
+
+        public void EndCurrentPhase()
+        {
+            phases[index].forceExit = true;
+        }
+
+
     }
 
 }

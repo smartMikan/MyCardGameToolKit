@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LifeSpring
   m_EditorClassIdentifier: 
   cardType: {fileID: 11400000, guid: 0397b0761db8e604e9fde3c8d9f8bc86, type: 2}
+  cost: 2
   properties:
   - stringValue: Life Spring
     intValue: 0
@@ -35,6 +36,6 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 973b1e8fbf7fbe3408a79c1d36842232, type: 3}
     element: {fileID: 11400000, guid: 536fc9dff63b0d14c9eaebaba61f2843, type: 2}
   - stringValue: 
-    intValue: 1
+    intValue: 2
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: 18acbbb5256e1404896cc7c78c04859a, type: 2}

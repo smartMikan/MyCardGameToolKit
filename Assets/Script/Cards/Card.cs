@@ -20,6 +20,7 @@ namespace Oukanu
     public class Card : ScriptableObject
     {
         public CardType cardType;
+        public int cost;
         public CardProperty[] properties;
     }
 }

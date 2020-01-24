@@ -32,8 +32,20 @@ namespace Oukanu
             };
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);
-
             return results;
+        }
+
+        public static void DropCreatureCard(Transform c, Transform p, CardInstance card)
+        {
+            SetParentForCard(c, p);
+            gameManager.currentPlayer.UseResourceCards(card.viz.card.cost);
+            gameManager.currentPlayer.DropCreatureCard(card);
+        }
+        public static void DropResourceCard(Transform c, Transform p, CardInstance card)
+        {
+            SetParentForCard(c, p);
+            gameManager.currentPlayer.DropResourceCard(card);
+            gameManager.currentPlayer.AddResourceCard(card.gameObject);
         }
 
         public static void SetParentForCard(Transform c,Transform p)

@@ -8,8 +8,10 @@ namespace Oukanu
 {
     public class GameManager : MonoBehaviour
     {
-
+        public PlayerHolder[] all_Player_Holders;
         public PlayerHolder currentPlayer;
+        public CardHolder playerOneHolder;
+        public CardHolder otherPlayersHolder;
 
 
         public State currentState;
@@ -25,14 +27,31 @@ namespace Oukanu
         private void Start()
         {
             Settings.gameManager = this;
+
+            //currentPlayer.isHumanPlayer = true;
+            //currentPlayer.currentHolder = playerOneHolder;
+            SetupPlayers();
+
             CreateStartingCards();
 
             turnText.value = turns[turnIndex].player.username;
             onTurnChanged.Raise();
         }
 
-        private void FixedUpdate()
+
+
+        public bool switchPlayer;
+
+        private void Update()
         {
+
+            if (switchPlayer)
+            {
+                switchPlayer = false;
+                playerOneHolder.LoadPlayer(all_Player_Holders[1]);
+                otherPlayersHolder.LoadPlayer(all_Player_Holders[0]);
+            }
+
             bool isComplete = turns[turnIndex].Execute();
 
             if (isComplete)
@@ -56,22 +75,43 @@ namespace Oukanu
             }
         }
 
+        void SetupPlayers()
+        {
+            foreach (PlayerHolder player in all_Player_Holders)
+            {
+                if (player.isHumanPlayer)
+                {
+                    player.currentHolder = playerOneHolder;
+                }
+                else
+                {
+                    player.currentHolder = otherPlayersHolder;
+                }
+            }
+        }
+
+
 
         void CreateStartingCards()
         {
             ResourcesManager rm = Settings.GetResourcesManager();
-            
-            for (int i = 0; i < currentPlayer.startingCards.Length; i++)
+            for (int p = 0; p < all_Player_Holders.Length; p++)
             {
-                GameObject go = Instantiate(cardPrefab) as GameObject;
-                CardViz viz = go.GetComponent<CardViz>();
-                viz.LoadCard(rm.GetCardInstance(currentPlayer.startingCards[i]));
+                for (int i = 0; i < all_Player_Holders[p].startingCards.Length; i++)
+                {
+                    GameObject go = Instantiate(cardPrefab) as GameObject;
+                    CardViz viz = go.GetComponent<CardViz>();
+                    viz.LoadCard(rm.GetCardInstance(all_Player_Holders[p].startingCards[i]));
 
-                CardInstance inst = go.GetComponent<CardInstance>();
-                inst.currentLogic = currentPlayer.handLogic;
-                Settings.SetParentForCard(go.transform, currentPlayer.handGrid.value);
-                
+                    CardInstance inst = go.GetComponent<CardInstance>();
+                    inst.currentLogic = all_Player_Holders[p].handLogic;
+                    Settings.SetParentForCard(go.transform, all_Player_Holders[p].currentHolder.handGrid.value);
+
+
+                    all_Player_Holders[p].handCards.Add(inst);
+                }
             }
+            
         }
 
 
@@ -79,6 +119,14 @@ namespace Oukanu
         {
             currentState = state;
         }
+
+
+
+        public void EndCurrentPhase()
+        {
+            turns[turnIndex].EndCurrentPhase();
+        }
+
     }
 
 }

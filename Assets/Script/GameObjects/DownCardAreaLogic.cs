@@ -8,7 +8,9 @@ namespace Oukanu.Objects
     {
         public CardVariables card;
         public CardType creatureType;
-        public SO.TransformVariable areaGrid;
+        public CardType resourceType;
+        public SO.TransformVariable creatureAreaGrid;
+        public SO.TransformVariable resourceAreaGrid;
         public ObjectsLogic cardDownLogic;
 
         public override void Execute()
@@ -18,15 +20,26 @@ namespace Oukanu.Objects
                 return;
             }
 
-
-            if(card.value.viz.card.cardType == creatureType)
+            CardInstance c = card.value;
+            bool canUse = Settings.gameManager.currentPlayer.CanUseCard(c.viz.card);
+            if (canUse)
             {
-                Debug.Log("Place Card Down");
+                if (c.viz.card.cardType == creatureType)
+                {
+                    Debug.Log("Place Card Down");
+                    Settings.DropCreatureCard(c.transform, creatureAreaGrid.value.transform, c);
+                }
+                else if (c.viz.card.cardType == resourceType)
+                {
+                    Debug.Log("Place Resources Card Down");
+                    Settings.DropResourceCard(c.transform, resourceAreaGrid.value.transform, c);
+                }
 
-                Settings.SetParentForCard(card.value.transform, areaGrid.value.transform);
-                card.value.currentLogic = cardDownLogic;
-                //Place Card Down 
+                c.gameObject.SetActive(true);
+                c.currentLogic = cardDownLogic;
             }
+
+           
         }
     }
 }

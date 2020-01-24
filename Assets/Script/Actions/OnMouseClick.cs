@@ -15,9 +15,10 @@ namespace Oukanu.GameStates
             if (Input.GetMouseButtonDown(0))
             {
                 List<RaycastResult> results = Settings.GetUIObjs();
-
+               
                 foreach (RaycastResult r in results)
                 {
+                    
                     IClickable c = r.gameObject.GetComponentInParent<IClickable>();
 
                     if (c != null)
