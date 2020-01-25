@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LocalPlayer
   m_EditorClassIdentifier: 
   username: Player
+  playerColor: {r: 1, g: 0.11792451, b: 0.795995, a: 1}
   startingCards:
   - LifeSpring
   - Waifu
@@ -24,9 +25,7 @@ MonoBehaviour:
   - SakuraTree
   - SakuraTree
   - SakuraTree
-  handGrid: {fileID: 11400000, guid: 0b73d9c91e7521e4bbd0e89f0a1d1fde, type: 2}
-  downGrid: {fileID: 11400000, guid: 29b429ca0492d1649ab059ff945443f7, type: 2}
-  resourcesCardGrid: {fileID: 11400000, guid: 5ac7610705e12fb439c9ea39f4884c5a, type: 2}
-  resourcesDroppablePerTurn: 1
+  isHumanPlayer: 1
   handLogic: {fileID: 11400000, guid: 4d7e6937fde6ac447b9bd21def99cc5b, type: 2}
   downLogic: {fileID: 11400000, guid: 9654f6cb1c8df9848ba731c610875ebe, type: 2}
+  resourcesDroppablePerTurn: 1

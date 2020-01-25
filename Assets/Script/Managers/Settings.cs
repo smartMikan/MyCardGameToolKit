@@ -22,6 +22,18 @@ namespace Oukanu
             return _resourcesManager;
         }
 
+        private static ConsoleHook _consoleManager;
+
+        public static void RegisterEvent(string e, Color color)
+        {
+            if(_consoleManager == null)
+            {
+                _consoleManager = Resources.Load("ConsoleHook") as ConsoleHook;
+            }
+
+            _consoleManager.RegisterEvent(e, color);
+
+        }
 
 
         public static List<RaycastResult> GetUIObjs()

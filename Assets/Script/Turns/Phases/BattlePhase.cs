@@ -7,6 +7,10 @@ namespace Oukanu
     [CreateAssetMenu(menuName = "Turns/BattlePhase")]
     public class BattlePhase : Phase
     {
+
+        public GameStates.State BattlePhaseControlState;
+        public GameStates.Condition isBattleValid;
+
         public override bool IsComplete()
         {
             if (forceExit)
@@ -21,6 +25,7 @@ namespace Oukanu
         {
             if (isInit)
             {
+                Debug.Log(this.name + " End");
                 Settings.gameManager.SetState(null);
                 isInit = false;
             }
@@ -31,7 +36,8 @@ namespace Oukanu
             if (!isInit)
             {
                 Debug.Log(this.name + " Start");
-                Settings.gameManager.SetState(null);
+                forceExit = !isBattleValid.IsValid();
+                Settings.gameManager.SetState((!forceExit) ? BattlePhaseControlState: null);
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
             }

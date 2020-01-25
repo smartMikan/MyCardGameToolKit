@@ -47,6 +47,8 @@ namespace Oukanu
         public void EndCurrentPhase()
         {
             phases[index].forceExit = true;
+            Settings.RegisterEvent(player.username +"'s "+ phases[index].name + " finished",player.playerColor);
+
         }
 
 

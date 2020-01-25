@@ -24,6 +24,17 @@ namespace Oukanu
         public SO.GameEvent onTurnChanged;
         public SO.GameEvent onPhaseChanged;
         public SO.StringVariable turnText;
+
+
+
+        public static GameManager Instance;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+        
+
         private void Start()
         {
             Settings.gameManager = this;
@@ -110,6 +121,9 @@ namespace Oukanu
 
                     all_Player_Holders[p].handCards.Add(inst);
                 }
+
+                Settings.RegisterEvent("Created cards for player " + all_Player_Holders[p].username, all_Player_Holders[p].playerColor);
+
             }
             
         }

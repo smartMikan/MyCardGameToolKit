@@ -9,6 +9,7 @@ namespace Oukanu
     public class PlayerHolder : ScriptableObject
     {
         public string username;
+        public Color playerColor;
         public string[] startingCards;
 
         public bool isHumanPlayer = false;
@@ -69,12 +70,20 @@ namespace Oukanu
                 {
                     result = true;
                 }
+                else
+                {
+                    Settings.RegisterEvent(username + "Dont have enough Resources to Drop " + c.name + " for cost of "+ c.cost.ToString() , Color.red);
+                }
             }
             if(c.cardType is ResourceCard)
             {
                 if(resourcesDropedThisTurn < resourcesDroppablePerTurn)
                 {
                     result = true;
+                }
+                else
+                {
+                    Settings.RegisterEvent("Cant Drop More Resource Cards " + resourcesDropedThisTurn.ToString() + "/" + resourcesDroppablePerTurn.ToString(), Color.red);
                 }
             }
             return result;
@@ -130,8 +139,10 @@ namespace Oukanu
             if (handCards.Contains(cardInst)) 
             {
                 handCards.Remove(cardInst);
-                resourcesDropedThisTurn++;
             }
+
+            resourcesDropedThisTurn++;
+            Settings.RegisterEvent(username + " Dropped " + cardInst.viz.card.name, Color.white);
         }
 
 
@@ -140,9 +151,19 @@ namespace Oukanu
             if (handCards.Contains(cardInst))
             {
                 handCards.Remove(cardInst);
-                downCards.Add(cardInst);
             }
-            
+
+            downCards.Add(cardInst);
+            Settings.RegisterEvent(username + " Dropped " + cardInst.viz.card.name + " for " + cardInst.viz.card.cost + " resources", Color.white);
+        }
+
+
+        private void DropCard(CardInstance cardInst)
+        {
+            if (handCards.Contains(cardInst))
+            {
+                handCards.Remove(cardInst);
+            }
         }
 
     }

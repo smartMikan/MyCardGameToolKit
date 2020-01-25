@@ -925,7 +925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 30.899994, y: 0}
+  m_AnchoredPosition: {x: 30.900024, y: 0}
   m_SizeDelta: {x: 61.800003, y: 38.600006}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &409791822
@@ -3537,6 +3537,7 @@ GameObject:
   - component: {fileID: 1517393687}
   - component: {fileID: 1517393686}
   - component: {fileID: 1517393688}
+  - component: {fileID: 1517393689}
   m_Layer: 5
   m_Name: Console
   m_TagString: Untagged
@@ -3615,6 +3616,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &1517393689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517393684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09e3d3031c13b5e4d97b25aa6e359a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  consoleGrid: {fileID: 0}
+  prefab: {fileID: 0}
+  hook: {fileID: 0}
 --- !u!1 &1541778351
 GameObject:
   m_ObjectHideFlags: 0

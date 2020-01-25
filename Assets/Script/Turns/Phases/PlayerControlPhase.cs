@@ -37,6 +37,7 @@ namespace Oukanu
         {
             if (isInit)
             {
+                Debug.Log(this.name + " End");
                 Settings.gameManager.SetState(null);
                 isInit = false;
             }
