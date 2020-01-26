@@ -17,6 +17,7 @@ namespace Oukanu.Objects
         {
             Debug.Log("this card is in hand");
             currentCard.Set(c);
+            currentCard.value.viz.SetHighight(false);
             Settings.gameManager.SetState(holdingCard);
             onCurrentCardSelected.Raise();
         }
@@ -26,7 +27,9 @@ namespace Oukanu.Objects
             //Vector3 o = Vector3.one * 1.5f;
 
             //this.transform.localScale = o;
-            
+            Settings.gameManager.DeHighlightCurrentCard();
+            currentCard.Set(c);
+            currentCard.value.viz.SetHighight(true);
         }
     }
 

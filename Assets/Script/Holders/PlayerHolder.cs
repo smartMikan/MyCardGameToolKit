@@ -15,17 +15,22 @@ namespace Oukanu
         public bool isHumanPlayer = false;
         [System.NonSerialized]
         public CardHolder currentHolder;
-
+        public int drawAmountPerTurn;
 
         public Objects.ObjectsLogic handLogic;
         public Objects.ObjectsLogic downLogic;
 
-       
+
+        [System.NonSerialized]
+        public List<CardInstance> deckCards = new List<CardInstance>();
         [System.NonSerialized]
         public List<CardInstance> handCards = new List<CardInstance>();
         [System.NonSerialized]
         public List<CardInstance> downCards = new List<CardInstance>();
-         [System.NonSerialized]
+        [System.NonSerialized]
+        public List<CardInstance> attackingCards = new List<CardInstance>();
+
+        [System.NonSerialized]
         public List<ResourcesHolder> resourcesList = new List<ResourcesHolder>();
         
         public int resourcesDroppablePerTurn = 1;
@@ -166,6 +171,96 @@ namespace Oukanu
             }
         }
 
+
+        public void ResetAllFlatFootedCards()
+        {
+            foreach (CardInstance c in downCards)
+            {
+                if (c.isFlatfooted)
+                {
+                    c.isFlatfooted = false;
+                    c.transform.localEulerAngles = Vector3.zero;
+                }
+            }
+        }
+
+
+        public bool DrawCard(int cardAmounts)
+        {
+            for (int i = 0; i < cardAmounts; i++)
+            {
+                if (deckCards.Count > 0)
+                {
+                    CardInstance c = deckCards[deckCards.Count - 1];
+                    deckCards.Remove(c);
+
+                    handCards.Add(c);
+
+                    c.currentLogic = handLogic;
+
+                    currentHolder.DrawCard(c);
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        public bool DrawCard()
+        {
+            return DrawCard(drawAmountPerTurn);
+        }
+
+
+        public void Shuffle(List<CardInstance> cards)
+        {
+            for (int i = 0; i < cards.Count; i++)
+            {
+                int a = Random.Range(0, cards.Count - 1);
+                int b = Random.Range(0, cards.Count - 1);
+                Swap(cards, a, b);
+            }
+            currentHolder.Shuffle(cards);
+        }
+
+        public void Shuffle()
+        {
+            Shuffle(deckCards);
+        }
+
+
+        public void Swap(List<CardInstance> cards, int a, int b)
+        {
+            if(a>cards.Count - 1 || b > cards.Count - 1)
+            {
+                throw new System.IndexOutOfRangeException();
+            }
+            else
+            {
+                CardInstance tempA = cards[a];
+                CardInstance tempB = cards[b];
+                cards[a] = tempB;
+                cards[b] = tempA;
+            }
+        }
+
+        public void Swap(List<CardInstance> cards, CardInstance a, CardInstance b)
+        {
+            if (cards.Find(t => t = a) && cards.Find(t => t = b))
+            {
+                int tempA = cards.IndexOf(a);
+                int tempB = cards.IndexOf(b);
+                cards[tempA] = b;
+                cards[tempB] = a;
+            }
+            else
+            {
+                throw new System.MissingMemberException();
+            }
+        }
     }
 
 }

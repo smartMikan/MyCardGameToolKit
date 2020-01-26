@@ -10,9 +10,9 @@ namespace Oukanu
         public CardViz viz;
         public Objects.ObjectsLogic currentLogic;
 
+		public bool isFlatfooted;
 
-
-        private void Start()
+        private void Awake()
         {
             viz = GetComponent<CardViz>();
         }
@@ -35,7 +35,23 @@ namespace Oukanu
 
             //Debug.Log("Highlight");
             currentLogic.OnHighlight(this);
+        }
 
+
+        public bool CanAttack()
+        {
+            bool result = false;
+            
+            if (viz.card.cardType.TypeAllowsForAttack(this))
+            {
+                result = true;
+                if (isFlatfooted)
+                {
+                    result = false;
+                }
+            }
+
+            return result;
         }
     }
 

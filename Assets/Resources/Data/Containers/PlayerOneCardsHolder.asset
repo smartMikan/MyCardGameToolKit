@@ -15,3 +15,5 @@ MonoBehaviour:
   handGrid: {fileID: 11400000, guid: 0b73d9c91e7521e4bbd0e89f0a1d1fde, type: 2}
   downGrid: {fileID: 11400000, guid: 29b429ca0492d1649ab059ff945443f7, type: 2}
   resourcesCardGrid: {fileID: 11400000, guid: 5ac7610705e12fb439c9ea39f4884c5a, type: 2}
+  deckGrid: {fileID: 11400000, guid: 6a684236366006d419688b5b257cc192, type: 2}
+  isPlayerOneHolder: 1

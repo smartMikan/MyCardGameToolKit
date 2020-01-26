@@ -25,6 +25,10 @@ namespace Oukanu.GameStates
                     c.OnHighlight();
                     break;
                 }
+                else
+                {
+                    Settings.gameManager.DeHighlightCurrentCard();
+                }
             }
             
         }

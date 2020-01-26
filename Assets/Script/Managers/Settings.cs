@@ -49,7 +49,18 @@ namespace Oukanu
 
         public static void DropCreatureCard(Transform c, Transform p, CardInstance card)
         {
-            SetParentForCard(c, p);
+			
+			SetParentForCard(c, p);
+			card.isFlatfooted = true;
+
+			//Execute Any Special ability on drop
+
+			if (card.isFlatfooted == true) 
+			{
+				c.localEulerAngles = new Vector3 (0, 0, 90);
+			}
+
+            
             gameManager.currentPlayer.UseResourceCards(card.viz.card.cost);
             gameManager.currentPlayer.DropCreatureCard(card);
         }
@@ -62,13 +73,22 @@ namespace Oukanu
 
         public static void SetParentForCard(Transform c,Transform p)
         {
-
+            if (c.parent == p) return;
             c.SetParent(p);
             c.localPosition = Vector3.zero;
             c.localEulerAngles = Vector3.zero;
             c.localScale = Vector3.one;
         }
 
+
+        public static void SetCardOntop(Transform c)
+        {
+            c.SetAsLastSibling();
+        }
+        public static void SetCardOnbeneth(Transform c)
+        {
+            c.SetAsFirstSibling();
+        }
     }
 
 }

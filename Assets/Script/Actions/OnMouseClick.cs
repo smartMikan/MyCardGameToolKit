@@ -18,7 +18,7 @@ namespace Oukanu.GameStates
                
                 foreach (RaycastResult r in results)
                 {
-                    
+
                     IClickable c = r.gameObject.GetComponentInParent<IClickable>();
 
                     if (c != null)
@@ -26,6 +26,7 @@ namespace Oukanu.GameStates
                         c.OnClick();
                         break;
                     }
+
                 }
             }
             

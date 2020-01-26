@@ -35,6 +35,8 @@ namespace Oukanu.Objects
                     Settings.DropResourceCard(c.transform, resourceAreaGrid.value.transform, c);
                 }
 
+
+                
                 c.gameObject.SetActive(true);
                 c.currentLogic = cardDownLogic;
             }

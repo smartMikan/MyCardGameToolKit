@@ -8,6 +8,7 @@ namespace Oukanu
 {
     public class GameManager : MonoBehaviour
     {
+        [System.NonSerialized]
         public PlayerHolder[] all_Player_Holders;
         public PlayerHolder currentPlayer;
         public CardHolder playerOneHolder;
@@ -25,13 +26,24 @@ namespace Oukanu
         public SO.GameEvent onPhaseChanged;
         public SO.StringVariable turnText;
 
-
-
         public static GameManager Instance;
+
+
+        public CardVariables currentMouseoverCard;
 
         private void Awake()
         {
             Instance = this;
+
+
+            all_Player_Holders = new PlayerHolder[turns.Length];
+
+            for (int i = 0; i < turns.Length; i++)
+            {
+                all_Player_Holders[i] = turns[i].player;
+            }
+
+            currentPlayer = turns[0].player;
         }
         
 
@@ -42,8 +54,18 @@ namespace Oukanu
             //currentPlayer.isHumanPlayer = true;
             //currentPlayer.currentHolder = playerOneHolder;
             SetupPlayers();
-
             CreateStartingCards();
+
+            playerOneHolder.LoadPlayer(all_Player_Holders[0]);
+            otherPlayersHolder.LoadPlayer(all_Player_Holders[1]);
+
+
+            all_Player_Holders[0].Shuffle();
+            all_Player_Holders[1].Shuffle();
+
+            all_Player_Holders[0].DrawCard(3);
+            all_Player_Holders[1].DrawCard(3);
+
 
             turnText.value = turns[turnIndex].player.username;
             onTurnChanged.Raise();
@@ -52,6 +74,7 @@ namespace Oukanu
 
 
         public bool switchPlayer;
+        bool switchedPlayer = false;
 
         private void Update()
         {
@@ -59,8 +82,18 @@ namespace Oukanu
             if (switchPlayer)
             {
                 switchPlayer = false;
-                playerOneHolder.LoadPlayer(all_Player_Holders[1]);
-                otherPlayersHolder.LoadPlayer(all_Player_Holders[0]);
+                if(!switchedPlayer)
+                {
+                    playerOneHolder.LoadPlayer(all_Player_Holders[1]);
+                    otherPlayersHolder.LoadPlayer(all_Player_Holders[0]);
+                    switchedPlayer = !switchedPlayer;
+                }
+                else
+                {
+                    playerOneHolder.LoadPlayer(all_Player_Holders[0]);
+                    otherPlayersHolder.LoadPlayer(all_Player_Holders[1]);
+                    switchedPlayer = !switchedPlayer;
+                }
             }
 
             bool isComplete = turns[turnIndex].Execute();
@@ -73,6 +106,10 @@ namespace Oukanu
                 {
                     turnIndex = 0;
                 }
+
+                //The current player has changed here
+                currentPlayer = turns[turnIndex].player;
+
 
                 turnText.value = turns[turnIndex].player.username;
 
@@ -115,11 +152,11 @@ namespace Oukanu
                     viz.LoadCard(rm.GetCardInstance(all_Player_Holders[p].startingCards[i]));
 
                     CardInstance inst = go.GetComponent<CardInstance>();
-                    inst.currentLogic = all_Player_Holders[p].handLogic;
-                    Settings.SetParentForCard(go.transform, all_Player_Holders[p].currentHolder.handGrid.value);
+                    //inst.currentLogic = all_Player_Holders[p].handLogic;
+                    //Settings.SetParentForCard(go.transform, all_Player_Holders[p].currentHolder.handGrid.value);
 
 
-                    all_Player_Holders[p].handCards.Add(inst);
+                    all_Player_Holders[p].deckCards.Add(inst);
                 }
 
                 Settings.RegisterEvent("Created cards for player " + all_Player_Holders[p].username, all_Player_Holders[p].playerColor);
@@ -139,6 +176,16 @@ namespace Oukanu
         public void EndCurrentPhase()
         {
             turns[turnIndex].EndCurrentPhase();
+        }
+
+
+        public void DeHighlightCurrentCard()
+        {
+            if (currentMouseoverCard.value != null)
+            {
+                currentMouseoverCard.value.viz.SetHighight(false);
+            }
+            
         }
 
     }

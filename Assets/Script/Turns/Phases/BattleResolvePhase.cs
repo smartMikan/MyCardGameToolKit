@@ -1,17 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Oukanu
 {
-    [CreateAssetMenu(menuName = "Turns/ResetResourcesCardPhase")]
-    public class ResetResourcesCardPhase : Phase
+
+    [CreateAssetMenu(menuName = "Turns/BattleResolvePhase")]
+    public class BattleResolvePhase : Phase
     {
         public override bool IsComplete()
         {
-            Settings.gameManager.currentPlayer.MakeAllResourcesUsable();
-            Settings.gameManager.currentPlayer.ResetAllFlatFootedCards();
-            return true;
+            throw new System.NotImplementedException();
         }
 
         public override void OnEndPhase()
@@ -36,4 +35,3 @@ namespace Oukanu
         }
     }
 }
-

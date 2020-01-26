@@ -13,14 +13,18 @@ namespace Oukanu.GameStates
         public override bool IsValid()
         {
             GameManager gm = GameManager.Instance;
-            if (gm.currentPlayer.downCards.Count > 0)
+            PlayerHolder p = gm.currentPlayer;
+
+
+            for (int i = 0; i < p.downCards.Count; i++)
             {
-                return true;
+                if (p.downCards[i].isFlatfooted == false)
+                {
+                    return true;
+                }
+                    
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

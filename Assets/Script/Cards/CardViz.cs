@@ -11,6 +11,8 @@ namespace Oukanu
         public CardVizProperty[] properties;
         public GameObject statsHolder;
         public GameObject resourceHolder;
+        public GameObject highlightHolder;
+        public GameObject backgroundHolder;
 
         //private void Start()
         //{
@@ -87,6 +89,18 @@ namespace Oukanu
             }
 
             return result;
+        }
+
+
+        public void SetHighight(bool state)
+        {
+            highlightHolder.SetActive(state);
+        }
+
+
+        public void SetBackward(bool state)
+        {
+            backgroundHolder.SetActive(state);
         }
 
     }

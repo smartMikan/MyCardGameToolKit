@@ -1,16 +1,15 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Oukanu
 {
-    [CreateAssetMenu(menuName = "Turns/ResetResourcesCardPhase")]
-    public class ResetResourcesCardPhase : Phase
+    [CreateAssetMenu(menuName = "Turns/DrawPhase")]
+    public class DrawcardPhase : Phase
     {
         public override bool IsComplete()
         {
-            Settings.gameManager.currentPlayer.MakeAllResourcesUsable();
-            Settings.gameManager.currentPlayer.ResetAllFlatFootedCards();
+            Settings.gameManager.currentPlayer.DrawCard();
             return true;
         }
 
@@ -28,12 +27,13 @@ namespace Oukanu
         {
             if (!isInit)
             {
-                Debug.Log(this.name + " Start");
+                Debug.Log(Settings.gameManager.currentPlayer.username +"'s " + this.name + " Start");
                 Settings.gameManager.SetState(null);
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
             }
         }
-    }
-}
 
+    }
+
+}
