@@ -15,18 +15,24 @@ MonoBehaviour:
   username: Player
   playerColor: {r: 1, g: 0.11792451, b: 0.795995, a: 1}
   startingCards:
-  - LifeSpring
-  - Waifu
-  - Waifu
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
+  - Sword
+  - Sword
+  - Sword
+  - Snipper
+  - Snipper
+  - Snipper
+  - Jet
+  - Jet
+  - Parachute
+  - Parachute
   isHumanPlayer: 1
-  drawAmountPerTurn: 1
   handLogic: {fileID: 11400000, guid: 4d7e6937fde6ac447b9bd21def99cc5b, type: 2}
   downLogic: {fileID: 11400000, guid: 9654f6cb1c8df9848ba731c610875ebe, type: 2}
+  isFlying: 0
+  Dexterity: 4
+  enemy: {fileID: 11400000, guid: 413eaa1d27c608d43836d2253f184ae3, type: 2}
+  DamagedState: {fileID: 0}
+  damageText: {fileID: 2985647490648226849, guid: d6bea6172d099dd4eb92def69c0d9ccf,
+    type: 3}
   resourcesDroppablePerTurn: 1
+  died: 0

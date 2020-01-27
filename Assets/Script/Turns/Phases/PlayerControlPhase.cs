@@ -29,6 +29,8 @@ namespace Oukanu
                 Settings.gameManager.SetState(playerControlState);
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
+
+                Settings.aiManager.DropCard();
             }
         }
 

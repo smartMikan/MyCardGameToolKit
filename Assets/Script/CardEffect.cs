@@ -7,11 +7,21 @@ public class CardEffectList
     public List<CardEffect> cardEffects = new List<CardEffect>();
 }
 
+public enum PlayerPosition
+{
+    ground,sky
+}
 
-
+[System.Serializable]
 public class CardEffect
 {
-    public bool IsInstance { get; private set; }
+    public bool isMoveCard;
+    public PlayerPosition targetPosition;
+
+    public bool isAttackCard;
+    public PlayerPosition targetAttackPosition;
+    public int ATKDamage;
+
 }
 
 
@@ -25,10 +35,9 @@ public class DefenceEffect : CardEffect
 {
 
 }
-
 public class StatusChangeEffect : CardEffect
 {
-
+   
 }
 
 

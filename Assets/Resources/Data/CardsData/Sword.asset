@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a3ecdabc73b4340888c2c8a7e7ef07, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  cardType: {fileID: 11400000, guid: 8fa8703f48536394c9602584da46790c, type: 2}
+  cost: 3
+  properties:
+  - stringValue: Sword
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: c2066679867aacc4fa48820eb406ebaa, type: 2}
+  - stringValue: Croz
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 0d5019aa4e20aa842a3220668539c2ef, type: 2}
+  - stringValue: Target Character Lose 3 Life
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 8ea43c18b35b52c4d86d2c7b1b543019, type: 2}
+  - stringValue: '"did you love sugar?"'
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 05b6b48ac54cf674fb2c5ee2db826634, type: 2}
+  - stringValue: 
+    intValue: 0
+    sprite: {fileID: 21300000, guid: 22aafb3e6158ac34497ba72d0b8cb87d, type: 3}
+    element: {fileID: 11400000, guid: 536fc9dff63b0d14c9eaebaba61f2843, type: 2}
+  - stringValue: 
+    intValue: 3
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 9e3bdb25bb88b8e4e8fa21c27fa4ee6b, type: 2}
+  - stringValue: 
+    intValue: 5
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: be32743528f0a504a8f024ddcbbbc6e5, type: 2}
+  - stringValue: "\u5730"
+    intValue: 0
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 61a77948a64504f4b9504831d2dde4e6, type: 2}
+  - stringValue: 
+    intValue: 3
+    sprite: {fileID: 0}
+    element: {fileID: 11400000, guid: 18acbbb5256e1404896cc7c78c04859a, type: 2}
+  cardEffect:
+    isMoveCard: 0
+    targetPosition: 0
+    isAttackCard: 1
+    targetAttackPosition: 0
+    ATKDamage: 3
+  cardSpeed: 5

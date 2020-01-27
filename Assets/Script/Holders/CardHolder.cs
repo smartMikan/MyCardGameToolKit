@@ -12,6 +12,8 @@ namespace Oukanu
         public SO.TransformVariable downGrid;
         public SO.TransformVariable resourcesCardGrid;
         public SO.TransformVariable deckGrid;
+        public SO.TransformVariable graveyardGrid;
+        public SO.TransformVariable destroyedGrid;
 
 
         public bool isPlayerOneHolder;
@@ -24,7 +26,7 @@ namespace Oukanu
             {
                 Settings.SetParentForCard(c.viz.gameObject.transform, downGrid.value);
                 //c.viz.gameObject.transform.SetParent(downGrid.value);
-
+                c.belongsToPlayer = player;
             }
 
             if (isPlayerOneHolder)
@@ -35,6 +37,7 @@ namespace Oukanu
                     //c.viz.gameObject.transform.SetParent(handGrid.value);
                     c.viz.SetBackward(false);
                     c.currentLogic = player.handLogic;
+                    c.belongsToPlayer = player;
                 }
             }
             else
@@ -46,6 +49,7 @@ namespace Oukanu
                     //c.viz.gameObject.transform.SetParent(handGrid.value);
                     c.viz.SetBackward(true);
                     c.currentLogic = null;
+                    c.belongsToPlayer = player;
                 }
 
             }
@@ -63,6 +67,25 @@ namespace Oukanu
                 //c.cardObj.transform.SetParent(resourcesCardGrid.value);
 
                 c.viz.SetBackward(true);
+                c.belongsToPlayer = player;
+            }
+
+            foreach (CardInstance c in player.graveyardCards)
+            {
+                Settings.SetParentForCard(c.viz.gameObject.transform, graveyardGrid.value);
+                //c.cardObj.transform.SetParent(resourcesCardGrid.value);
+
+                c.viz.SetBackward(false);
+                c.belongsToPlayer = player;
+            }
+
+            foreach (CardInstance c in player.destroyedCards)
+            {
+                Settings.SetParentForCard(c.viz.gameObject.transform, destroyedGrid.value);
+                //c.cardObj.transform.SetParent(resourcesCardGrid.value);
+
+                c.viz.SetBackward(false);
+                c.belongsToPlayer = player;
             }
         }
 
@@ -72,18 +95,45 @@ namespace Oukanu
             if (isPlayerOneHolder)
             {
                 c.viz.SetBackward(false);
+
             }
             else
             {
+                c.viz.SetBackward(true);
                 c.currentLogic = null;
             }
         }
+
 
         internal void Shuffle(List<CardInstance> cards)
         {
             for (int i = 0; i < cards.Count; i++)
             {
                 Settings.SetCardOnbeneth(cards[i].viz.gameObject.transform);
+            }
+        }
+
+        internal void ReLoadGraveyardToDeck(PlayerHolder player)
+        {
+            foreach (CardInstance c in player.deckCards)
+            {
+                Settings.SetParentForCard(c.viz.gameObject.transform, deckGrid.value);
+                //c.cardObj.transform.SetParent(resourcesCardGrid.value);
+
+                c.viz.SetBackward(true);
+            }
+
+        }
+
+        internal void ReLoadHandcardsToGraveyard(PlayerHolder player)
+        {
+
+            foreach (CardInstance c in player.graveyardCards)
+            {
+                Settings.SetParentForCard(c.viz.gameObject.transform, graveyardGrid.value);
+                //c.cardObj.transform.SetParent(resourcesCardGrid.value);
+
+                c.viz.SetBackward(false);
             }
         }
     }

@@ -16,4 +16,6 @@ MonoBehaviour:
   downGrid: {fileID: 11400000, guid: fa14c2b85e4b59e499e558976c8b5f14, type: 2}
   resourcesCardGrid: {fileID: 11400000, guid: e686198c400a99e4599baeac3a770695, type: 2}
   deckGrid: {fileID: 11400000, guid: a2cd2c81ca39c6f4984ab0197968a00e, type: 2}
+  graveyardGrid: {fileID: 11400000, guid: 112c5dc6d7f8a1141bb2c3dc2f16e355, type: 2}
+  destroyedGrid: {fileID: 11400000, guid: df1e75e5096cda042b77f45b61da4623, type: 2}
   isPlayerOneHolder: 0

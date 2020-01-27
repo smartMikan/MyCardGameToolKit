@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3249691e052e4934f8fbfade75d66a69, type: 3}
   m_Name: Resource
   m_EditorClassIdentifier: 
-  typeName: 
+  typeName: Resource
+  canAttack: 0

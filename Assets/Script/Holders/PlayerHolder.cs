@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,10 +16,25 @@ namespace Oukanu
         public bool isHumanPlayer = false;
         [System.NonSerialized]
         public CardHolder currentHolder;
-        public int drawAmountPerTurn;
+        //public int drawAmountPerTurn;
 
         public Objects.ObjectsLogic handLogic;
         public Objects.ObjectsLogic downLogic;
+
+        public bool isFlying;
+        public int Dexterity;
+
+
+        public PlayerHolder enemy;
+        public GameStates.State DamagedState;
+
+        public GameObject damageText;
+        
+        [System.NonSerialized]
+        public PlayerStatus mystatus;
+
+        [System.NonSerialized]
+        public Dictionary<CardInstance, List<CardInstance>> cardBelongsToDic = new Dictionary<CardInstance, List<CardInstance>>();
 
 
         [System.NonSerialized]
@@ -27,6 +43,11 @@ namespace Oukanu
         public List<CardInstance> handCards = new List<CardInstance>();
         [System.NonSerialized]
         public List<CardInstance> downCards = new List<CardInstance>();
+        [System.NonSerialized]
+        public List<CardInstance> graveyardCards = new List<CardInstance>();
+        [System.NonSerialized]
+        public List<CardInstance> destroyedCards = new List<CardInstance>();
+
         [System.NonSerialized]
         public List<CardInstance> attackingCards = new List<CardInstance>();
 
@@ -94,6 +115,25 @@ namespace Oukanu
             return result;
         }
 
+        
+
+        internal void MoveCard(CardInstance card,List<CardInstance> from,List<CardInstance> to)
+        {
+            to.Add(card);
+            from.Remove(card);
+            if (cardBelongsToDic.ContainsKey(card))
+            {
+                cardBelongsToDic[card] = to;
+            }
+            else
+            {
+                cardBelongsToDic.Add(card, to);
+            }
+        }
+
+
+
+
         public List<ResourcesHolder> GetUnusedResources()
         {
             List<ResourcesHolder> resources = new List<ResourcesHolder>();
@@ -153,22 +193,14 @@ namespace Oukanu
 
         public void DropCreatureCard(CardInstance cardInst)
         {
-            if (handCards.Contains(cardInst))
-            {
-                handCards.Remove(cardInst);
-            }
-
-            downCards.Add(cardInst);
+            MoveCard(cardInst, handCards, downCards);
             Settings.RegisterEvent(username + " Dropped " + cardInst.viz.card.name + " for " + cardInst.viz.card.cost + " resources", Color.white);
         }
 
 
         private void DropCard(CardInstance cardInst)
         {
-            if (handCards.Contains(cardInst))
-            {
-                handCards.Remove(cardInst);
-            }
+            MoveCard(cardInst, handCards, downCards);
         }
 
 
@@ -192,9 +224,7 @@ namespace Oukanu
                 if (deckCards.Count > 0)
                 {
                     CardInstance c = deckCards[deckCards.Count - 1];
-                    deckCards.Remove(c);
-
-                    handCards.Add(c);
+                    MoveCard(c, deckCards, handCards);
 
                     c.currentLogic = handLogic;
 
@@ -202,25 +232,56 @@ namespace Oukanu
                 }
                 else
                 {
-                    return false;
+                    if (graveyardCards.Count > 0)
+                    {
+                        ResetGraveyardToDeck();
+                        DrawCard(cardAmounts - i);
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
             }
             return true;
         }
 
-        public bool DrawCard()
+        private void ResetGraveyardToDeck()
         {
-            return DrawCard(drawAmountPerTurn);
+            while (graveyardCards.Count>0)
+            {
+                int i = graveyardCards.Count - 1;
+                MoveCard(graveyardCards[i], graveyardCards, deckCards);
+            }
+
+            currentHolder.ReLoadGraveyardToDeck(this);
+
+            Shuffle(deckCards);
+            currentHolder.Shuffle(deckCards);
         }
 
+        public bool DrawCard()
+        {
+            return DrawCard(Dexterity);
+        }
 
+        public void AbandonHandCard()
+        {
+            while(handCards.Count>0)
+            {
+                int i = handCards.Count - 1;
+                handCards[i].currentLogic = null;
+                MoveCard(handCards[i], handCards, graveyardCards);
+            }
+            currentHolder.ReLoadHandcardsToGraveyard(this);
+        }
         public void Shuffle(List<CardInstance> cards)
         {
             for (int i = 0; i < cards.Count; i++)
             {
-                int a = Random.Range(0, cards.Count - 1);
-                int b = Random.Range(0, cards.Count - 1);
+                int a = UnityEngine.Random.Range(0, cards.Count - 1);
+                int b = UnityEngine.Random.Range(0, cards.Count - 1);
                 Swap(cards, a, b);
             }
             currentHolder.Shuffle(cards);
@@ -261,6 +322,138 @@ namespace Oukanu
                 throw new System.MissingMemberException();
             }
         }
+
+
+
+        public void LoadAllCardToDic()
+        {
+
+            cardBelongsToDic.Clear();
+
+            foreach (CardInstance c in handCards)
+            {
+                cardBelongsToDic.Add(c, handCards);
+            }
+
+            foreach (CardInstance c in downCards)
+            {
+                cardBelongsToDic.Add(c, downCards);
+            }
+
+            foreach (CardInstance c in graveyardCards)
+            {
+                cardBelongsToDic.Add(c, graveyardCards);
+            }
+
+            foreach (CardInstance c in destroyedCards)
+            {
+                cardBelongsToDic.Add(c, destroyedCards);
+            }
+
+            
+        }
+
+        public int GetHp()
+        {
+            return handCards.Count + deckCards.Count + graveyardCards.Count;
+        }
+
+        internal bool ChangeState(PlayerPosition targetPosition)
+        {
+            switch (targetPosition)
+            {
+                case PlayerPosition.ground:
+                    isFlying = false;
+                    break;
+                case PlayerPosition.sky:
+                    isFlying = true;
+                    break;
+                default:
+                    break;
+            }
+            return true;
+        }
+
+
+        internal bool Attack(int atkDamage, PlayerPosition targetatkPosition)
+        {
+            switch (targetatkPosition)
+            {
+                case PlayerPosition.ground:
+                    if (!enemy.isFlying)
+                    {
+                        enemy.Damaged(atkDamage);
+                    }
+                    else
+                    {
+                        enemy.Missed();
+                    }
+                    break;
+                case PlayerPosition.sky:
+                    if (enemy.isFlying)
+                    {
+                        enemy.Damaged(atkDamage);
+                    }
+                    else
+                    {
+                        enemy.Missed();
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return true;
+
+        }
+
+        private void Missed()
+        {
+            GameObject go = Instantiate(damageText,mystatus.transform);
+            damageText.GetComponent<DamageText>().SetMiss();
+
+        }
+
+        public void Damaged(int atkDamage)
+        {
+            
+            GameObject go = Instantiate(damageText, mystatus.transform);
+            damageText.GetComponent<DamageText>().SetDamage(atkDamage);
+
+            //Settings.gameManager.SetState(DamagedState);
+            //damageleft = atkDamage;
+
+            for (int i = 0; i < atkDamage; i++)
+            {
+                if (deckCards.Count>0)
+                {
+                    MoveCard(deckCards[deckCards.Count - 1], deckCards, destroyedCards);
+                }
+                else if (graveyardCards.Count > 0)
+                {
+                    MoveCard(graveyardCards[graveyardCards.Count - 1], graveyardCards, destroyedCards);
+                }
+                else if (handCards.Count > 0)
+                {
+                    MoveCard(handCards[handCards.Count - 1], handCards, destroyedCards);
+                }
+                else if (downCards.Count > 0)
+                {
+                    MoveCard(downCards[downCards.Count - 1], downCards, destroyedCards);
+                }
+                else
+                {
+                    died = true;
+                    break;
+                }
+            }
+
+
+        }
+
+        public bool died = false;
+
+        //public int damageleft;
     }
 
 }

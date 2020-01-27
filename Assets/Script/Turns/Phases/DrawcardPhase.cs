@@ -9,7 +9,10 @@ namespace Oukanu
     {
         public override bool IsComplete()
         {
-            Settings.gameManager.currentPlayer.DrawCard();
+            foreach (PlayerHolder player in Settings.gameManager.all_Player_Holders)
+            {
+                player.DrawCard();
+            }
             return true;
         }
 

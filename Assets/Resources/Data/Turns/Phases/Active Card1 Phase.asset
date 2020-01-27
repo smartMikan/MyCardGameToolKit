@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc97eb6b2eead294e961bb470ae9001a, type: 3}
+  m_Name: Active Card1 Phase
+  m_EditorClassIdentifier: 
+  phaseName: ActiveCard1
+  forceExit: 0
+  setbackEffect: {fileID: 3149025540900401881, guid: 5984d1ffb2b68fd45a83b7c8a29eb9db,
+    type: 3}
+  CheckArea:
+  - {fileID: 11400000, guid: bc64e459503d62c4d8ff7690c3e746fc, type: 2}
+  - {fileID: 11400000, guid: a556d4e6701ef7c45bd1cfacd6b42ad7, type: 2}

@@ -16,3 +16,4 @@ MonoBehaviour:
     type: 2}
   currentCard: {fileID: 11400000, guid: 1c4f04a5043a1ff40864eb478676ce15, type: 2}
   holdingCard: {fileID: 11400000, guid: b5c124b51326345499a5109391a57229, type: 2}
+  handCardArea: {fileID: 11400000, guid: 0af7b9e7474b84546b5ec4786e936816, type: 2}

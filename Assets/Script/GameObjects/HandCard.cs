@@ -11,6 +11,7 @@ namespace Oukanu.Objects
         public SO.GameEvent onCurrentCardSelected;
         public CardVariables currentCard;
         public GameStates.State holdingCard;
+        public HandCardAreaLogic handCardArea;
 
 
         public override void OnClick(CardInstance c)
@@ -20,6 +21,7 @@ namespace Oukanu.Objects
             currentCard.value.viz.SetHighight(false);
             Settings.gameManager.SetState(holdingCard);
             onCurrentCardSelected.Raise();
+            c.belongsToArea = handCardArea;
         }
 
         public override void OnHighlight(CardInstance c)

@@ -8,7 +8,6 @@ namespace Oukanu
 {
     public class GameManager : MonoBehaviour
     {
-        [System.NonSerialized]
         public PlayerHolder[] all_Player_Holders;
         public PlayerHolder currentPlayer;
         public CardHolder playerOneHolder;
@@ -34,14 +33,14 @@ namespace Oukanu
         private void Awake()
         {
             Instance = this;
+            Settings.gameManager = this;
 
+            //all_Player_Holders = new PlayerHolder[turns.Length];
 
-            all_Player_Holders = new PlayerHolder[turns.Length];
-
-            for (int i = 0; i < turns.Length; i++)
-            {
-                all_Player_Holders[i] = turns[i].player;
-            }
+            //for (int i = 0; i < turns.Length; i++)
+            //{
+            //    all_Player_Holders[i] = turns[i].player;
+            //}
 
             currentPlayer = turns[0].player;
         }
@@ -49,8 +48,6 @@ namespace Oukanu
 
         private void Start()
         {
-            Settings.gameManager = this;
-
             //currentPlayer.isHumanPlayer = true;
             //currentPlayer.currentHolder = playerOneHolder;
             SetupPlayers();
@@ -63,9 +60,10 @@ namespace Oukanu
             all_Player_Holders[0].Shuffle();
             all_Player_Holders[1].Shuffle();
 
-            all_Player_Holders[0].DrawCard(3);
-            all_Player_Holders[1].DrawCard(3);
-
+            //all_Player_Holders[0].DrawCard();
+            //all_Player_Holders[1].DrawCard();
+            all_Player_Holders[0].isFlying = false;
+            all_Player_Holders[1].isFlying = false;
 
             turnText.value = turns[turnIndex].player.username;
             onTurnChanged.Raise();
@@ -121,6 +119,11 @@ namespace Oukanu
             {
                 currentState.Tick(Time.deltaTime);
             }
+
+
+
+
+
         }
 
         void SetupPlayers()

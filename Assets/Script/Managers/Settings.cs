@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,9 @@ namespace Oukanu
     public static class Settings
     {
         public static GameManager gameManager;
+        public static AIManager aiManager;
+
+
 
         private static ResourcesManager _resourcesManager;
 
@@ -64,12 +68,23 @@ namespace Oukanu
             gameManager.currentPlayer.UseResourceCards(card.viz.card.cost);
             gameManager.currentPlayer.DropCreatureCard(card);
         }
+
+        
+
         public static void DropResourceCard(Transform c, Transform p, CardInstance card)
         {
             SetParentForCard(c, p);
             gameManager.currentPlayer.DropResourceCard(card);
             gameManager.currentPlayer.AddResourceCard(card.gameObject);
         }
+
+        public static void MoveCard(Transform c, Transform p, CardInstance card, List<CardInstance> from, List<CardInstance> to)
+        {
+            SetParentForCard(c, p);
+            gameManager.currentPlayer.MoveCard(card, from, to);
+
+        }
+        
 
         public static void SetParentForCard(Transform c,Transform p)
         {
@@ -89,6 +104,22 @@ namespace Oukanu
         {
             c.SetAsFirstSibling();
         }
+
+
+        internal static bool TickAttack(CardInstance card,int atkDamage, PlayerPosition targetPosition)
+        {
+            return card.belongsToPlayer.Attack(atkDamage, targetPosition);
+        }
+
+        internal static bool TickMove(CardInstance card,PlayerPosition targetPosition)
+        {
+            return card.belongsToPlayer.ChangeState(targetPosition);
+        }
+
+
+
+
+
     }
 
 }

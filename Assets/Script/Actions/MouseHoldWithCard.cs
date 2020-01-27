@@ -38,9 +38,11 @@ namespace Oukanu.GameStates
                     }
                 }
 
-                
+
                 //Bring Back Cards
+               
                 currentCard.value.gameObject.SetActive(true);
+                currentCard.value.belongsToArea.domainCard = currentCard.value;
                 currentCard.value = null;
                 
 

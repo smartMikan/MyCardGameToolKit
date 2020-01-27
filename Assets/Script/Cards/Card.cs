@@ -22,6 +22,9 @@ namespace Oukanu
         public CardType cardType;
         public int cost;
         public CardProperty[] properties;
+        public CardEffect cardEffect;
+        public int cardSpeed;
+
     }
 }
 
