@@ -8,12 +8,21 @@ namespace Oukanu.Objects
     public abstract class AreaLogic : ScriptableObject
     {
         [System.NonSerialized]
-        public CardInstance domainCard;
+        public CardInstance domainCard = null;
 
         public SO.TransformVariable CardGrid;
 
         public abstract void Execute();
-        
+
+        public void ClearDomain()
+        {
+            if (domainCard)
+            {
+                domainCard.belongsToArea = null;
+            }
+            domainCard = null;
+        }
+
     }
 }
 

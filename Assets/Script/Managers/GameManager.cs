@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Oukanu.GameStates;
-
+using System;
 
 namespace Oukanu
 {
     public class GameManager : MonoBehaviour
     {
+        bool Endgame = false;
+        bool IsStarting = false;
         public PlayerHolder[] all_Player_Holders;
         public PlayerHolder currentPlayer;
         public CardHolder playerOneHolder;
@@ -43,7 +45,11 @@ namespace Oukanu
             //}
 
             currentPlayer = turns[0].player;
+
+            Endgame = false;
+            IsStarting = true;
         }
+
         
 
         private void Start()
@@ -76,6 +82,11 @@ namespace Oukanu
 
         private void Update()
         {
+            if (Endgame)
+            {
+                return;
+            }
+
 
             if (switchPlayer)
             {
@@ -191,6 +202,17 @@ namespace Oukanu
             
         }
 
+
+
+        internal void EndGame(PlayerHolder loser,PlayerHolder winner)
+        {
+            if (!Endgame)
+            {
+                Settings.RegisterEvent(loser.username + "が倒れた!", Color.green);
+                Settings.RegisterEvent(winner.username + "が勝ちました!!!", Color.green);
+            }
+            Endgame = true;
+        }
     }
 
 }

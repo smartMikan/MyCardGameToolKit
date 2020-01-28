@@ -21,15 +21,21 @@ namespace Oukanu
         public Objects.ObjectsLogic handLogic;
         public Objects.ObjectsLogic downLogic;
 
+        [System.NonSerialized]
         public bool isFlying;
+
         public int Dexterity;
 
 
         public PlayerHolder enemy;
-        public GameStates.State DamagedState;
+        //public GameStates.State DamagedState;
 
         public GameObject damageText;
-        
+
+        [System.NonSerialized]
+        public bool died = false;
+
+        //public int damageleft;
         [System.NonSerialized]
         public PlayerStatus mystatus;
 
@@ -44,12 +50,17 @@ namespace Oukanu
         [System.NonSerialized]
         public List<CardInstance> downCards = new List<CardInstance>();
         [System.NonSerialized]
+        public List<CardInstance> downCards2 = new List<CardInstance>();
+        [System.NonSerialized]
         public List<CardInstance> graveyardCards = new List<CardInstance>();
         [System.NonSerialized]
         public List<CardInstance> destroyedCards = new List<CardInstance>();
 
         [System.NonSerialized]
         public List<CardInstance> attackingCards = new List<CardInstance>();
+
+        [System.NonSerialized]
+        public List<CardInstance> drawingCards = new List<CardInstance>();
 
         [System.NonSerialized]
         public List<ResourcesHolder> resourcesList = new List<ResourcesHolder>();
@@ -219,6 +230,7 @@ namespace Oukanu
 
         public bool DrawCard(int cardAmounts)
         {
+
             for (int i = 0; i < cardAmounts; i++)
             {
                 if (deckCards.Count > 0)
@@ -227,8 +239,8 @@ namespace Oukanu
                     MoveCard(c, deckCards, handCards);
 
                     c.currentLogic = handLogic;
-
-                    currentHolder.DrawCard(c);
+                    drawingCards.Add(c);
+                    //currentHolder.DrawCard(c);
                 }
                 else
                 {
@@ -339,7 +351,10 @@ namespace Oukanu
             {
                 cardBelongsToDic.Add(c, downCards);
             }
-
+            foreach (CardInstance c in downCards2)
+            {
+                cardBelongsToDic.Add(c, downCards);
+            }
             foreach (CardInstance c in graveyardCards)
             {
                 cardBelongsToDic.Add(c, graveyardCards);
@@ -355,7 +370,7 @@ namespace Oukanu
 
         public int GetHp()
         {
-            return handCards.Count + deckCards.Count + graveyardCards.Count;
+            return handCards.Count + deckCards.Count + downCards.Count + downCards2.Count + graveyardCards.Count;
         }
 
         internal bool ChangeState(PlayerPosition targetPosition)
@@ -380,23 +395,25 @@ namespace Oukanu
             switch (targetatkPosition)
             {
                 case PlayerPosition.ground:
-                    if (!enemy.isFlying)
+                    if (enemy.isFlying)
                     {
-                        enemy.Damaged(atkDamage);
+                        enemy.Missed();
                     }
                     else
                     {
-                        enemy.Missed();
+                        enemy.Damaged(atkDamage,this);
                     }
                     break;
                 case PlayerPosition.sky:
                     if (enemy.isFlying)
                     {
-                        enemy.Damaged(atkDamage);
+                        enemy.Damaged(atkDamage,this);
                     }
                     else
                     {
                         enemy.Missed();
+                        Oukanu.Settings.RegisterEvent(username + "の攻撃が外れた!" , Color.white);
+
                     }
                     break;
                 default:
@@ -410,36 +427,58 @@ namespace Oukanu
         private void Missed()
         {
             GameObject go = Instantiate(damageText,mystatus.transform);
-            damageText.GetComponent<DamageText>().SetMiss();
+            go.GetComponent<DamageText>().SetMiss();
+            Destroy(go, 3f);
+
 
         }
 
-        public void Damaged(int atkDamage)
+        public void Damaged(int atkDamage,PlayerHolder fromPlayer)
         {
             
             GameObject go = Instantiate(damageText, mystatus.transform);
-            damageText.GetComponent<DamageText>().SetDamage(atkDamage);
+            go.GetComponent<DamageText>().SetDamage(atkDamage,this,fromPlayer);
 
+            Destroy(go, 3f);
             //Settings.gameManager.SetState(DamagedState);
             //damageleft = atkDamage;
 
             for (int i = 0; i < atkDamage; i++)
             {
+                if (died)
+                {
+                    break;
+                }
+
                 if (deckCards.Count>0)
                 {
-                    MoveCard(deckCards[deckCards.Count - 1], deckCards, destroyedCards);
+                    CardInstance c = deckCards[deckCards.Count - 1];
+                    MoveCard(c, deckCards, destroyedCards);
+                    currentHolder.ReLoadDestroyedCard(this, c);
                 }
                 else if (graveyardCards.Count > 0)
                 {
-                    MoveCard(graveyardCards[graveyardCards.Count - 1], graveyardCards, destroyedCards);
+                    CardInstance c = graveyardCards[graveyardCards.Count - 1];
+                    MoveCard(c, graveyardCards, destroyedCards);
+                    currentHolder.ReLoadDestroyedCard(this, c);
                 }
                 else if (handCards.Count > 0)
                 {
-                    MoveCard(handCards[handCards.Count - 1], handCards, destroyedCards);
+                    CardInstance c = handCards[handCards.Count - 1];
+                    MoveCard(c, handCards, destroyedCards);
+                    currentHolder.ReLoadDestroyedCard(this, c);
+                }
+                else if (downCards2.Count > 0)
+                {
+                    CardInstance c = downCards2[downCards2.Count - 1];
+                    MoveCard(c, downCards2, destroyedCards);
+                    currentHolder.ReLoadDestroyedCard(this, c);
                 }
                 else if (downCards.Count > 0)
                 {
-                    MoveCard(downCards[downCards.Count - 1], downCards, destroyedCards);
+                    CardInstance c = downCards[downCards.Count - 1];
+                    MoveCard(c, downCards, destroyedCards);
+                    currentHolder.ReLoadDestroyedCard(this, c);
                 }
                 else
                 {
@@ -451,9 +490,6 @@ namespace Oukanu
 
         }
 
-        public bool died = false;
-
-        //public int damageleft;
     }
 
 }

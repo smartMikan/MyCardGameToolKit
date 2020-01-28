@@ -13,16 +13,22 @@ public class DamageText : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
-        Destroy(this, 10f);
     }
 
     internal void SetMiss()
     {
         text.text = "Miss!";
+        text.color = Color.yellow;
+
     }
 
-    internal void SetDamage(int atkDamage)
+    internal void SetDamage(int atkDamage, Oukanu.PlayerHolder playerHolder, Oukanu.PlayerHolder fromPlayer)
     {
         text.text = atkDamage.ToString();
+        text.color = Color.red;
+
+        Oukanu.Settings.RegisterEvent(playerHolder.username + "が" + atkDamage.ToString() + "のダメージを受けた!("+ fromPlayer.username +")", Color.white);
+
+
     }
 }

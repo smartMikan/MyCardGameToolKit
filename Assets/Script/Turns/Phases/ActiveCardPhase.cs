@@ -9,15 +9,13 @@ namespace Oukanu
     public class ActiveCardPhase : Phase
     {
         public GameObject setbackEffect;
-
-
-
         public Objects.AreaLogic[] CheckArea;
 
         [System.NonSerialized]
         List<CardInstance> activeCards = new List<CardInstance>();
-
+        [System.NonSerialized]
         int index;
+        [System.NonSerialized]
         bool result;
 
         public override bool IsComplete()
@@ -45,6 +43,7 @@ namespace Oukanu
                 Debug.Log(this.name + " End");
                 Settings.gameManager.SetState(null);
                 isInit = false;
+                result = false;
             }
         }
 
@@ -57,6 +56,7 @@ namespace Oukanu
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
                 result = false;
+
                 CheckCardsInArea();
 
                 Settings.gameManager.StartCoroutine(TickEffect());
@@ -74,6 +74,7 @@ namespace Oukanu
                 if (CheckArea[i].domainCard != null)
                 {
                     activeCards.Add(CheckArea[i].domainCard);
+                    CheckArea[i].domainCard.belongsToArea = CheckArea[i];
                 }
             }
 
@@ -93,11 +94,16 @@ namespace Oukanu
         {
             while (activeCards.Count > 0)
             {
-                activeCards[index].viz.SetBackward(false);
+                CardInstance c = activeCards[index];
+                c.viz.SetBackward(false);
                 yield return effectSetBackward();
-                yield return activeCards[index].TickEffect();
-                activeCards[index].belongsToPlayer.MoveCard(activeCards[index], activeCards[index].belongsToPlayer.downCards, activeCards[index].belongsToPlayer.graveyardCards);
-                activeCards.Remove(activeCards[index]);
+
+                
+                c.belongsToArea.ClearDomain();
+                c.belongsToPlayer.MoveCard(c, c.belongsToPlayer.cardBelongsToDic[c], c.belongsToPlayer.graveyardCards);
+
+                yield return c.TickEffect();
+                activeCards.Remove(c);
                 index = activeCards.Count - 1;
             }
 

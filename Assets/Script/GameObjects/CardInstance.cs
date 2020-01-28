@@ -13,6 +13,7 @@ namespace Oukanu
 
 		public bool isFlatfooted;
 
+        [System.NonSerialized]
         public Objects.AreaLogic belongsToArea;
         
         [System.NonSerialized]

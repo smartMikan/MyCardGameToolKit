@@ -13,13 +13,16 @@ namespace Oukanu.Objects
 
         public override void Execute()
         {
+            if (domainCard)
+            {
+                return;
+            }
             domainCard = enemySelectedCard.value;
-
-
-
+            enemySelectedCard.value.belongsToArea = this;
         }
+       
 
-        
+
     }
 }
 

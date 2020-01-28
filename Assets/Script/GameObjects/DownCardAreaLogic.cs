@@ -7,9 +7,12 @@ namespace Oukanu.Objects
     public class DownCardAreaLogic : AreaLogic
     {
         public CardVariables card;
-        public CardType[] typeArray;
         public ObjectsLogic cardDownLogic;
+
+        [System.NonSerialized]
         public bool dominated;
+
+        public int index;
 
         public override void Execute()
         {
@@ -31,8 +34,16 @@ namespace Oukanu.Objects
 
             Debug.Log("Place Card Down");
 
-            
-            Settings.MoveCard(c.transform, CardGrid.value,c,Settings.gameManager.currentPlayer.cardBelongsToDic[c], Settings.gameManager.currentPlayer.downCards);
+            if(index == 1)
+            {
+                Settings.MoveCard(c.transform, CardGrid.value, c, Settings.gameManager.currentPlayer.cardBelongsToDic[c], Settings.gameManager.currentPlayer.downCards);
+
+            }
+            if (index == 2)
+            {
+                Settings.MoveCard(c.transform, CardGrid.value, c, Settings.gameManager.currentPlayer.cardBelongsToDic[c], Settings.gameManager.currentPlayer.downCards2);
+
+            }
 
             c.belongsToArea = this;
             c.gameObject.SetActive(true);
@@ -62,6 +73,8 @@ namespace Oukanu.Objects
 
 
         }
+
+
     }
 }
 

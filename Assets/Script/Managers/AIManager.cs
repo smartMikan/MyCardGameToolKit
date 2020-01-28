@@ -17,11 +17,18 @@ namespace Oukanu
         {
             Settings.aiManager = this;
         }
-        
 
-        public void SelectACard(CardInstance card)
+        private void Start()
+        {
+            for (int i = 0; i < downcardareas.Length; i++)
+            {
+                downcardareas[i].ClearDomain();
+            }
+        }
+        public CardInstance SelectACard(CardInstance card)
         {
             cardVariable.value = card;
+            return card;
         }
 
         public void DropCard()
@@ -33,13 +40,23 @@ namespace Oukanu
                     break;
                 }
                 int c = UnityEngine.Random.Range(0, aiPlayer.handCards.Count - 1);
-                SelectACard(aiPlayer.handCards[c]);
+                CardInstance card = SelectACard(aiPlayer.handCards[c]);
                 downcardareas[i].Execute();
-                aiPlayer.MoveCard(aiPlayer.handCards[c], aiPlayer.handCards, aiPlayer.downCards);
-                aiPlayer.handCards[c].belongsToArea = downcardareas[i];
+
+                if (i == 0)
+                {
+                    aiPlayer.MoveCard(card, aiPlayer.handCards, aiPlayer.downCards);
+                }
+                if (i == 1)
+                {
+                    aiPlayer.MoveCard(card, aiPlayer.handCards, aiPlayer.downCards2);
+                }
 
 
-                Settings.SetParentForCard(aiPlayer.handCards[c].viz.gameObject.transform, downcardareas[i].CardGrid.value);
+                card.belongsToArea = downcardareas[i];
+
+
+                Settings.SetParentForCard(card.viz.gameObject.transform, downcardareas[i].CardGrid.value);
                 //aiPlayer.currentHolder.LoadPlayer(aiPlayer);
                 
             }

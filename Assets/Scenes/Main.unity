@@ -583,7 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731c6476261c98f4f9f8e63b3e8c0f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformVariable: {fileID: 11400000, guid: a2cd2c81ca39c6f4984ab0197968a00e, type: 2}
+  transformVariable: {fileID: 11400000, guid: df1e75e5096cda042b77f45b61da4623, type: 2}
 --- !u!114 &241706212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,7 +935,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408063727}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -981,7 +981,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &409791821
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2099,17 +2099,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892994651}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2120636491}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 126, y: 15}
-  m_SizeDelta: {x: 450, y: 253}
+  m_AnchoredPosition: {x: 126, y: 54}
+  m_SizeDelta: {x: 1080, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &892994653
 MonoBehaviour:
@@ -4230,8 +4230,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1789794685}
-  - component: {fileID: 1789794686}
   - component: {fileID: 1789794687}
+  - component: {fileID: 1789794686}
   m_Layer: 5
   m_Name: Enemy Graveyard
   m_TagString: Untagged
@@ -4270,7 +4270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731c6476261c98f4f9f8e63b3e8c0f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformVariable: {fileID: 11400000, guid: a2cd2c81ca39c6f4984ab0197968a00e, type: 2}
+  transformVariable: {fileID: 11400000, guid: 112c5dc6d7f8a1141bb2c3dc2f16e355, type: 2}
 --- !u!114 &1789794687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4881,8 +4881,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 126, y: -9}
-  m_SizeDelta: {x: 450, y: 253}
+  m_AnchoredPosition: {x: 126, y: -70}
+  m_SizeDelta: {x: 1080, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2011656975
 MonoBehaviour:

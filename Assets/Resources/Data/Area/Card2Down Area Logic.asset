@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6ceb91a93cce84fbdf9dfe1c46a9d0, type: 3}
   m_Name: Card2Down Area Logic
   m_EditorClassIdentifier: 
+  CardGrid: {fileID: 11400000, guid: b9ba7d7ecff3fe2429b8fa98a697df2e, type: 2}
   card: {fileID: 11400000, guid: 1c4f04a5043a1ff40864eb478676ce15, type: 2}
   typeArray: []
-  CardGrid: {fileID: 11400000, guid: b9ba7d7ecff3fe2429b8fa98a697df2e, type: 2}
   cardDownLogic: {fileID: 11400000, guid: 9654f6cb1c8df9848ba731c610875ebe, type: 2}
   dominated: 1
-  domainCard: {fileID: 11400000, guid: 889beb7b73484c34cb9668336f554fe3, type: 2}
+  index: 2

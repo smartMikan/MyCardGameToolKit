@@ -10,17 +10,33 @@ namespace Oukanu
     {
         public SO.TransformVariable handGrid;
         public SO.TransformVariable downGrid;
+        public SO.TransformVariable downGrid2;
         public SO.TransformVariable resourcesCardGrid;
         public SO.TransformVariable deckGrid;
         public SO.TransformVariable graveyardGrid;
         public SO.TransformVariable destroyedGrid;
-
-
+        
         public bool isPlayerOneHolder;
+
+        [System.NonSerialized]
+        public Dictionary<List<CardInstance>, SO.TransformVariable> cardListTransDic = new Dictionary<List<CardInstance>, SO.TransformVariable>();
+
+
+
 
         public void LoadPlayer(PlayerHolder player)
         {
             player.currentHolder = this;
+
+            cardListTransDic.Clear();
+            cardListTransDic.Add(player.handCards, handGrid);
+            cardListTransDic.Add(player.deckCards, deckGrid);
+            cardListTransDic.Add(player.downCards, downGrid);
+            cardListTransDic.Add(player.downCards2, downGrid2);
+            cardListTransDic.Add(player.graveyardCards, graveyardGrid);
+            cardListTransDic.Add(player.destroyedCards, destroyedGrid);
+
+
 
             foreach (CardInstance c in player.downCards)
             {
@@ -28,7 +44,12 @@ namespace Oukanu
                 //c.viz.gameObject.transform.SetParent(downGrid.value);
                 c.belongsToPlayer = player;
             }
-
+            foreach (CardInstance c in player.downCards2)
+            {
+                Settings.SetParentForCard(c.viz.gameObject.transform, downGrid2.value);
+                //c.viz.gameObject.transform.SetParent(downGrid.value);
+                c.belongsToPlayer = player;
+            }
             if (isPlayerOneHolder)
             {
                 foreach (CardInstance c in player.handCards)
@@ -136,5 +157,29 @@ namespace Oukanu
                 c.viz.SetBackward(false);
             }
         }
+
+        internal void ReLoadDestroyedCard(PlayerHolder player,CardInstance c)
+        {
+            Settings.SetParentForCard(c.viz.gameObject.transform, destroyedGrid.value);
+            c.viz.SetBackward(false);
+        }
+
+
+
+
+        public IEnumerator UpdateCardList(List<CardInstance> cardList, float waitTime, List<CardInstance> targetList)
+        {
+            for (int i = 0; i < cardList.Count; i++)
+            {
+                CardInstance c = cardList[i];
+
+                Settings.SetParentForCard(c.viz.gameObject.transform, cardListTransDic[targetList].value);
+                c.viz.SetBackward(!isPlayerOneHolder);
+                yield return new WaitForSeconds(waitTime);
+
+            }
+            cardList.Clear();
+        }
+
     }
 }
