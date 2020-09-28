@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a757816a34e404ab3d59190a645997, type: 3}
   m_Name: LocalPlayer
   m_EditorClassIdentifier: 
-  username: Player
+  username: Player1
+  potrait: {fileID: 21300000, guid: 973b1e8fbf7fbe3408a79c1d36842232, type: 3}
   playerColor: {r: 1, g: 0.11792451, b: 0.795995, a: 1}
-  startingCards:
+  CurrentDeck:
+  - SakuraTree
+  - SakuraTree
+  - SakuraTree
+  - SakuraTree
+  - SakuraTree
+  - Waifu
+  - Waifu
+  - Waifu
+  - Waifu
   - LifeSpring
-  - Waifu
-  - Waifu
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
-  - SakuraTree
   isHumanPlayer: 1
   drawAmountPerTurn: 1
   handLogic: {fileID: 11400000, guid: 4d7e6937fde6ac447b9bd21def99cc5b, type: 2}

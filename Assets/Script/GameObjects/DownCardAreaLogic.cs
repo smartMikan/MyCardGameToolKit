@@ -6,7 +6,7 @@ namespace Oukanu.Objects
     [CreateAssetMenu(menuName = "Areas/DownCardsAreaLogic")]
     public class DownCardAreaLogic : AreaLogic
     {
-        public CardVariables card;
+        public Variable.CardVariables card;
         public CardType creatureType;
         public CardType resourceType;
         public SO.TransformVariable creatureAreaGrid;
@@ -21,15 +21,15 @@ namespace Oukanu.Objects
             }
 
             CardInstance c = card.value;
-            bool canUse = Settings.gameManager.currentPlayer.CanUseCard(c.viz.card);
+            bool canUse = Settings.gameManager.CurrentPlayer.CanUseCard(c.viz.Card);
             if (canUse)
             {
-                if (c.viz.card.cardType == creatureType)
+                if (c.viz.Card.cardType == creatureType)
                 {
                     Debug.Log("Place Card Down");
                     Settings.DropCreatureCard(c.transform, creatureAreaGrid.value.transform, c);
                 }
-                else if (c.viz.card.cardType == resourceType)
+                else if (c.viz.Card.cardType == resourceType)
                 {
                     Debug.Log("Place Resources Card Down");
                     Settings.DropResourceCard(c.transform, resourceAreaGrid.value.transform, c);

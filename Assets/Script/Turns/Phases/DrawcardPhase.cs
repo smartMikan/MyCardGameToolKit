@@ -9,8 +9,12 @@ namespace Oukanu
     {
         public override bool IsComplete()
         {
-            Settings.gameManager.currentPlayer.DrawCard();
-            return true;
+            if (forceExit)
+            {
+                forceExit = false;
+                return true;
+            }
+            return false;
         }
 
         public override void OnEndPhase()
@@ -27,10 +31,24 @@ namespace Oukanu
         {
             if (!isInit)
             {
-                Debug.Log(Settings.gameManager.currentPlayer.username +"'s " + this.name + " Start");
+                Debug.Log(Settings.gameManager.CurrentPlayer.username +"'s " + this.name + " Start");
                 Settings.gameManager.SetState(null);
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
+
+                bool drawSuccess = Settings.gameManager.CurrentPlayer.DrawCard();
+                if (drawSuccess)
+                {
+                    forceExit = true;
+                }
+                else
+                {
+                    //
+                    Debug.Log("No cards in deck,press end phase to continue");
+                    Settings.RegisterEvent("No cards in deck,press end phase to continue", Color.red);
+                    //some effect
+
+                }
             }
         }
 

@@ -9,7 +9,7 @@ namespace Oukanu.Objects
     {
 
         public SO.GameEvent onCurrentCardSelected;
-        public CardVariables currentCard;
+        public Variable.CardVariables currentCard;
         public GameStates.State holdingCard;
 
 

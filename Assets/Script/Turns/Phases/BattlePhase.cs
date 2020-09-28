@@ -7,7 +7,7 @@ namespace Oukanu
     [CreateAssetMenu(menuName = "Turns/BattlePhase")]
     public class BattlePhase : Phase
     {
-
+        //current actions to be excuted
         public GameStates.State BattlePhaseControlState;
         public GameStates.Condition isBattleValid;
 
@@ -36,8 +36,10 @@ namespace Oukanu
             if (!isInit)
             {
                 Debug.Log(this.name + " Start");
+                //if have no battle cards then forceExit will be true
                 forceExit = !isBattleValid.IsValid();
-                Settings.gameManager.SetState((!forceExit) ? BattlePhaseControlState: null);
+                //if force exit no state will be set, else set battle phase control state
+                Settings.gameManager.SetState((forceExit) ? null : BattlePhaseControlState);
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
             }

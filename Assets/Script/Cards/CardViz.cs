@@ -7,17 +7,31 @@ namespace Oukanu
 {
     public class CardViz : MonoBehaviour
     {
-        public Card card { get; private set; }
+        public Card Card { get; private set; }
         public CardVizProperty[] properties;
         public GameObject statsHolder;
         public GameObject resourceHolder;
         public GameObject highlightHolder;
         public GameObject backgroundHolder;
 
-        //private void Start()
-        //{
-        //    LoadCard(card);
-        //}
+        public float autoRotateSpeed;
+        private Vector3 targetRotation = Vector3.zero;
+
+        public void SetTargetRotation(Vector3 eulerAngle)
+        {
+            targetRotation = eulerAngle;
+        }
+
+        private void Update()
+        {
+            if(transform.localEulerAngles.z!= targetRotation.z)
+            {
+                var step = autoRotateSpeed * Time.deltaTime;
+                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, Quaternion.Euler(targetRotation), step);
+            }
+        }
+
+
 
         public void LoadCard(Card c)
         {
@@ -25,7 +39,7 @@ namespace Oukanu
             {
                 return;
             }
-            card = c;
+            Card = c;
 
             c.cardType.OnSetType(this);
 

@@ -8,7 +8,7 @@ namespace Oukanu
 {
     public class CurrentSelected : MonoBehaviour
     {
-        public CardVariables currentCard;
+        public Variable.CardVariables currentCard;
         public CardViz cardViz;
 
 
@@ -23,7 +23,7 @@ namespace Oukanu
 
 
             currentCard.value.gameObject.SetActive(false);
-            cardViz.LoadCard(currentCard.value.viz.card);
+            cardViz.LoadCard(currentCard.value.viz.Card);
             cardViz.gameObject.SetActive(true);
         }
 

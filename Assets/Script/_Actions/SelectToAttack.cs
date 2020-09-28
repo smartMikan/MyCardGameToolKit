@@ -18,16 +18,17 @@ namespace Oukanu.GameStates
                 {
                     CardInstance inst = r.gameObject.GetComponentInParent<CardInstance>();
 
-                    PlayerHolder p = Settings.gameManager.currentPlayer;
+                    PlayerHolder player = Settings.gameManager.CurrentPlayer;
 
-                    if (!p.downCards.Contains(inst))
+                    if (!player.downCards.Contains(inst))
                     {
                         return;
                     }
 
                     if (inst.CanAttack())
                     {
-                        p.attackingCards.Add(inst);
+                        player.attackingCards.Add(inst);
+                        player.currentHolder.SetCardOnBattleLine(inst);
                         //you can attack
                     }
                 }

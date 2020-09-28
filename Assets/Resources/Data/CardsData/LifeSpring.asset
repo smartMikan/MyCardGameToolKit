@@ -31,11 +31,11 @@ MonoBehaviour:
     intValue: 0
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: 05b6b48ac54cf674fb2c5ee2db826634, type: 2}
-  - stringValue: 
+  - stringValue: Art
     intValue: 0
     sprite: {fileID: 21300000, guid: 973b1e8fbf7fbe3408a79c1d36842232, type: 3}
     element: {fileID: 11400000, guid: 536fc9dff63b0d14c9eaebaba61f2843, type: 2}
-  - stringValue: 
+  - stringValue: ResourcesConsume
     intValue: 2
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: 18acbbb5256e1404896cc7c78c04859a, type: 2}

@@ -8,7 +8,7 @@ namespace Oukanu
 {
     public class UpdateTextFromPhase : UIPropertyUpdater
     {
-        public PhaseVariable currentPhase;
+        public Variable.PhaseVariable currentPhase;
         
         public Text targetText;
 

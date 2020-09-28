@@ -26,7 +26,7 @@ namespace Oukanu
 
         public static void RegisterEvent(string e, Color color)
         {
-            if(_consoleManager == null)
+            if (_consoleManager == null)
             {
                 _consoleManager = Resources.Load("ConsoleHook") as ConsoleHook;
             }
@@ -49,34 +49,35 @@ namespace Oukanu
 
         public static void DropCreatureCard(Transform c, Transform p, CardInstance card)
         {
-			
-			SetParentForCard(c, p);
-			card.isFlatfooted = true;
+            //call set parent in player holder
+            //SetParentForCard(c, p);
 
-			//Execute Any Special ability on drop
-
-			if (card.isFlatfooted == true) 
-			{
-				c.localEulerAngles = new Vector3 (0, 0, 90);
-			}
-
-            
-            gameManager.currentPlayer.UseResourceCards(card.viz.card.cost);
-            gameManager.currentPlayer.DropCreatureCard(card);
+            //Execute Any Special ability on drop
+            gameManager.CurrentPlayer.UseResourceCards(card.viz.Card.cost);
+            gameManager.CurrentPlayer.DropCreatureCard(card);
+            card.SetFlatfooted(true);
         }
+
         public static void DropResourceCard(Transform c, Transform p, CardInstance card)
         {
             SetParentForCard(c, p);
-            gameManager.currentPlayer.DropResourceCard(card);
-            gameManager.currentPlayer.AddResourceCard(card.gameObject);
+            gameManager.CurrentPlayer.DropResourceCard(card);
+            gameManager.CurrentPlayer.AddResourceCard(card.gameObject);
         }
 
-        public static void SetParentForCard(Transform c,Transform p)
+        public static void SetParentForCard(Transform c, Transform p, bool withAnim = false)
         {
             if (c.parent == p) return;
             c.SetParent(p);
             c.localPosition = Vector3.zero;
-            c.localEulerAngles = Vector3.zero;
+            if (withAnim)
+            {
+                c.GetComponent<CardViz>().SetTargetRotation(Vector3.zero);
+            }
+            else
+            {
+                c.localEulerAngles = Vector3.zero;
+            }
             c.localScale = Vector3.one;
         }
 

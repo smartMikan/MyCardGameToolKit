@@ -14,10 +14,7 @@ namespace Oukanu.Objects
 
         public override void OnHighlight(CardInstance c)
         {
-            //Vector3 o = Vector3.one * 1.5f;
-
-            //this.transform.localScale = o;
-           
+            //c.viz.SetHighight(true);
         }
     }
 

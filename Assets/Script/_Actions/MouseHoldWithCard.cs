@@ -10,7 +10,7 @@ namespace Oukanu.GameStates
     public class MouseHoldWithCard : Action
     {
 
-        public CardVariables currentCard;
+        public Variable.CardVariables currentCard;
         public State playerControlState;
         public SO.GameEvent onPlayerControlState;
 

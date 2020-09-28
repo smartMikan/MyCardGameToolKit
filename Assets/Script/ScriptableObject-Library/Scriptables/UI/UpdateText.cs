@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using SO;
 using UnityEngine.UI;
 
 namespace SO.UI
 {
     public class UpdateText : UIPropertyUpdater
     {
-        public StringVariable targetString;
+        public Oukanu.Variable.StringVariable targetString;
         public Text targetText;
         
         /// <summary>

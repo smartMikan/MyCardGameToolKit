@@ -4,14 +4,20 @@ using System.Collections;
 
 namespace Oukanu
 {
+    //can be a player action
     [CreateAssetMenu(menuName = "Turns/ResetResourcesCardPhase")]
     public class ResetResourcesCardPhase : Phase
     {
         public override bool IsComplete()
         {
-            Settings.gameManager.currentPlayer.MakeAllResourcesUsable();
-            Settings.gameManager.currentPlayer.ResetAllFlatFootedCards();
-            return true;
+
+
+            if (forceExit)
+            {
+                forceExit = false;
+                return true;
+            }
+            return false;
         }
 
         public override void OnEndPhase()
@@ -32,6 +38,10 @@ namespace Oukanu
                 Settings.gameManager.SetState(null);
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
+
+                Settings.gameManager.CurrentPlayer.MakeAllResourcesUsable();
+
+                forceExit = true;
             }
         }
     }

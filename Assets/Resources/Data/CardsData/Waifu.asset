@@ -31,16 +31,16 @@ MonoBehaviour:
     intValue: 0
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: 05b6b48ac54cf674fb2c5ee2db826634, type: 2}
-  - stringValue: 
+  - stringValue: Art
     intValue: 0
     sprite: {fileID: 21300000, guid: e676bac4019471047ae1fb3875aaa160, type: 3}
     element: {fileID: 11400000, guid: 536fc9dff63b0d14c9eaebaba61f2843, type: 2}
-  - stringValue: 
+  - stringValue: Resources Cost
     intValue: 3
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: 18acbbb5256e1404896cc7c78c04859a, type: 2}
   - stringValue: Attack
-    intValue: 50
+    intValue: 3
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: a15cbe9a090f5974bb5398d22418fbc4, type: 2}
   - stringValue: Defence

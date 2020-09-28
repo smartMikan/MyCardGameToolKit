@@ -16,4 +16,5 @@ MonoBehaviour:
   downGrid: {fileID: 11400000, guid: 29b429ca0492d1649ab059ff945443f7, type: 2}
   resourcesCardGrid: {fileID: 11400000, guid: 5ac7610705e12fb439c9ea39f4884c5a, type: 2}
   deckGrid: {fileID: 11400000, guid: 6a684236366006d419688b5b257cc192, type: 2}
-  isPlayerOneHolder: 1
+  battleLine: {fileID: 11400000, guid: a614f3fbf52b16949af8a707a895f231, type: 2}
+  isP1Holder: 1

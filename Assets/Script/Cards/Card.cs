@@ -22,6 +22,20 @@ namespace Oukanu
         public CardType cardType;
         public int cost;
         public CardProperty[] properties;
+
+
+        public CardProperty GetProperty(Element definition)
+        {
+            for (int i = 0; i < properties.Length; i++)
+            {
+                if (properties[i].element == definition)
+                {
+                    return properties[i];
+                }
+            }
+
+            return null;
+        }
     }
 }
 

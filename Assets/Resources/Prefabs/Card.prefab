@@ -159,6 +159,7 @@ MonoBehaviour:
   resourceHolder: {fileID: 5715168539888940115}
   highlightHolder: {fileID: 3058522944246944975}
   backgroundHolder: {fileID: 8171757877257619210}
+  autoRotateSpeed: 300
 --- !u!114 &5639773893621525508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +174,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viz: {fileID: 0}
   currentLogic: {fileID: 0}
-  isFlatfooted: 0
 --- !u!1 &5715168538949578873
 GameObject:
   m_ObjectHideFlags: 0

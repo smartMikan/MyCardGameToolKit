@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: EnemyTurn
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: 413eaa1d27c608d43836d2253f184ae3, type: 2}
-  currentPhase: {fileID: 11400000, guid: 345088bc734aff146ae6ebead8f5e08a, type: 2}
+  currentPhaseVariable: {fileID: 11400000, guid: 345088bc734aff146ae6ebead8f5e08a,
+    type: 2}
   phases:
   - {fileID: 11400000, guid: d86546c02c0a03745a3ea31eb83cb4ac, type: 2}
   - {fileID: 11400000, guid: 5dfb258f97c8bd8479d246f794306800, type: 2}
+  - {fileID: 11400000, guid: a81fad80f2a080f4ab10019a76770655, type: 2}
   - {fileID: 11400000, guid: 2de00e46880938343a5447e741456972, type: 2}
+  - {fileID: 11400000, guid: 590696f8f8331e44399234267554fffe, type: 2}
+  turnStartActions:
+  - {fileID: 11400000, guid: bfd0017b3b888ac48bec85dcc0dc89bb, type: 2}
