@@ -12,7 +12,7 @@ namespace Oukanu.GameStates
         {
             if (Input.GetMouseButtonDown(0))
             {
-                List<RaycastResult> results = Settings.GetUIObjs();
+                List<RaycastResult> results = Settings.GetUIObjects();
 
                 foreach (RaycastResult r in results)
                 {
@@ -27,9 +27,8 @@ namespace Oukanu.GameStates
 
                     if (inst.CanAttack())
                     {
-                        player.attackingCards.Add(inst);
-                        player.currentHolder.SetCardOnBattleLine(inst);
                         //you can attack
+                        inst.SetOnBattleLine();
                     }
                 }
             }

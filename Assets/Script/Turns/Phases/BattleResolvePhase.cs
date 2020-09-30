@@ -78,9 +78,9 @@ namespace Oukanu
                                 continue;
                             }
                             attackValue -= defence.intValue;
-                            if (defence.intValue<= attackValue)
+                            if (defence.intValue <= attackValue)
                             {
-                                //card died
+                                //defence card died
                                 blockerInstance.CardInstanceToGraveyard();
                             }
                         }
@@ -89,22 +89,20 @@ namespace Oukanu
                     if (attackValue <= 0)
                     {
                         attackValue = 0;
-                        //Card Died
+                        //attack card Died
                         attackerInstance.CardInstanceToGraveyard();
+                    }
+                    else
+                    {
+                        //TO DO: make special logic like attackerInstance.AfterAttackLogic.excute();
+                        attackerInstance.BackToDownGrid();
                     }
 
                     enemy.DoDamage(attackValue);
-
-                    //trick
-                    player.DropCreatureCard(attackerInstance, false);
-                    //rotation changed
-                    player.currentHolder.SetCardDown(attackerInstance);
-                    //set flat last so rotation change can be seen
-                    attackerInstance.SetFlatfooted(true);
                 }
 
                 Settings.gameManager.ClearBlockInstances();
-                player.attackingCards.Clear();
+                //player.attackingCards.Clear();
 
                 forceExit = true;
             }

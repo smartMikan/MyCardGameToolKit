@@ -8,25 +8,25 @@ namespace Oukanu.Variable
     [CreateAssetMenu(menuName = "Variables/Card Variable")]
     public class CardVariables : ScriptableObject
     {
-        public CardInstance value;
+        public CardInstance Value { get; private set; }
 
         public void Set(CardInstance v)
         {
-            value = v;
+            Value = v;
         }
         public void Set(CardVariables v)
         {
-            value = v.value;
+            Value = v.Value;
         }
 
         public bool IsEmptyOrNull()
         {
-            return value == null;
+            return Value == null;
         }
 
         public void Clear()
         {
-            value = null;
+            Value = null;
         }
     }
 }

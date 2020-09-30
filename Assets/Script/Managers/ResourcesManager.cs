@@ -21,11 +21,12 @@ namespace Oukanu
 
         }
 
-        public Card GetCardInstance(string id)
+        public Card GetCardInstance(string cardName)
         {
-            Card originalCard = GetCard(id);
+            Card originalCard = GetCard(cardName);
             if(originalCard == null)
             {
+                Debug.LogError("this card name doesn't exist in database!");
                 return null;
             }
 
@@ -35,10 +36,10 @@ namespace Oukanu
         }
 
 
-        Card GetCard(string id)
+        Card GetCard(string name)
         {
             Card result = null;
-            cardsDict.TryGetValue(id, out result);
+            cardsDict.TryGetValue(name, out result);
             return result;
         }
     }

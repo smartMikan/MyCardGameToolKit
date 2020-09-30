@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6ceb91a93cce84fbdf9dfe1c46a9d0, type: 3}
   m_Name: Down Card Area Logic
   m_EditorClassIdentifier: 
-  card: {fileID: 11400000, guid: 1c4f04a5043a1ff40864eb478676ce15, type: 2}
+  currentSelectedCard: {fileID: 11400000, guid: b8040f05f2f02e34d947baec40906bbb,
+    type: 2}
   creatureType: {fileID: 11400000, guid: 32a28df3d8349404bb6d50d395239c75, type: 2}
   resourceType: {fileID: 11400000, guid: b8eb6763bcb1e024c88222346ade9712, type: 2}
   creatureAreaGrid: {fileID: 11400000, guid: 29b429ca0492d1649ab059ff945443f7, type: 2}

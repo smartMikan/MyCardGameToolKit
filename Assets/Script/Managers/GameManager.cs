@@ -57,7 +57,7 @@ namespace Oukanu
             blockInstances.Clear();
         }
 
-        public void AddBlockInstance(CardInstance attacker, CardInstance blocker)
+        public void AddBlockInstance(CardInstance attacker, CardInstance blocker, ref int count)
         {
             BlockInstance b = null;
             b = GetBlockInstanceOfAttacker(attacker);
@@ -71,6 +71,7 @@ namespace Oukanu
             {
                 b.Blockers.Add(blocker);
             }
+            count = b.Blockers.Count;
         }
 
         BlockInstance GetBlockInstanceOfAttacker(CardInstance attacker)
@@ -234,20 +235,12 @@ namespace Oukanu
 
         public void LoadPlayerOnActive(PlayerHolder player)
         {
-            if (P1CardHolder.possessedPlayer != player)
+            PlayerHolder prevPlayer = P1CardHolder.possessedPlayer;
+            if (prevPlayer != player)
             {
-                PlayerHolder prevPlayer = P1CardHolder.possessedPlayer;
-                if (prevPlayer != null)
-                {
-                    LoadPlayerOnHolder(prevPlayer, P2CardHolder, statsUIs[1]);
-                    LoadPlayerOnHolder(player, P1CardHolder, statsUIs[0]);
-                }
-                else
-                {
-                    Debug.LogError("prev player is null");
-                }
-
+                LoadPlayerOnHolder(prevPlayer, P2CardHolder, statsUIs[1]);
             }
+            LoadPlayerOnHolder(player, P1CardHolder, statsUIs[0]);
         }
 
         internal void LoadPlayerOnHolder(PlayerHolder player, CardHolder holder, PlayerStatsUI statsUI)
@@ -271,9 +264,9 @@ namespace Oukanu
 
         public void DeHighlightCurrentCard()
         {
-            if (currentMouseoverCard.value != null)
+            if (currentMouseoverCard.Value != null)
             {
-                currentMouseoverCard.value.viz.SetHighight(false);
+                currentMouseoverCard.Value.viz.SetHighight(false);
             }
 
         }

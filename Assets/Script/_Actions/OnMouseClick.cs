@@ -14,7 +14,7 @@ namespace Oukanu.GameStates
 
             if (Input.GetMouseButtonDown(0))
             {
-                List<RaycastResult> results = Settings.GetUIObjs();
+                List<RaycastResult> results = Settings.GetUIObjects();
                
                 foreach (RaycastResult r in results)
                 {

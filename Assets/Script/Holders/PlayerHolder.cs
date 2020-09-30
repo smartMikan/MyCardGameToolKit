@@ -19,7 +19,6 @@ namespace Oukanu
         public PlayerStatsUI statsUI;
 
 
-        //public string[] startingCards;
         public List<string> CurrentDeck = new List<string>();
 
 
@@ -29,8 +28,16 @@ namespace Oukanu
         public int drawAmountPerTurn;
 
         public Objects.ObjectsLogic handLogic;
-        public Objects.ObjectsLogic downLogic;
 
+        //TODO: should defined later
+        public Objects.ObjectsLogic deckLogic;
+        public Objects.ObjectsLogic attackingLogic;
+        public Objects.ObjectsLogic downLogic;
+        public Objects.ObjectsLogic graveyardLogic;
+        public Objects.ObjectsLogic resourcesLogic;
+        //
+
+        #region Runtime Card Data Holder
 
         [System.NonSerialized]
         public List<CardInstance> deckCards = new List<CardInstance>();
@@ -41,7 +48,32 @@ namespace Oukanu
         [System.NonSerialized]
         public List<CardInstance> attackingCards = new List<CardInstance>();
         [System.NonSerialized]
-        public List<ResourcesHolder> resourcesList = new List<ResourcesHolder>();
+        public List<CardInstance> graveyardCards = new List<CardInstance>();
+        [System.NonSerialized]
+        public List<CardInstance> resourcesList = new List<CardInstance>();
+
+        #endregion
+
+        internal void MoveCardFromHolder(CardInstance card, List<CardInstance> from,List<CardInstance> to)
+        {
+            if (from.Contains(card))
+            {
+                from.Remove(card);
+                to.Add(card);
+                card.currentBelongs = to;
+            }
+            else
+            {
+                Debug.LogError("from holder doesn't contain this card");
+            }
+        }
+
+        public void MoveCardToGraveyard(CardInstance card, List<CardInstance> from)
+        {
+            MoveCardFromHolder(card, from, graveyardCards);
+            currentHolder.SetCardToGraveyard(card);
+        }
+
 
         //can drop how mush resources per turn
         public int resourcesDroppablePerTurn = 1;
@@ -56,22 +88,16 @@ namespace Oukanu
 
         public int ResourceCount { get { return currentHolder.resourcesCardGrid.value.GetComponentsInChildren<CardViz>().Length; } }
 
-        public void AddResourceCard(GameObject cardObject)
-        {
-            ResourcesHolder resourcesHolder = new ResourcesHolder
-            {
-                cardObj = cardObject
-            };
-            resourcesList.Add(resourcesHolder);
-        }
 
+
+        #region Resources
 
         public int NonUsedResourceCard()
         {
             int result = 0;
             for (int i = 0; i < resourcesList.Count; i++)
             {
-                if (!resourcesList[i].isUsed)
+                if (!resourcesList[i].IsFlatfooted)
                 {
                     result++;
                 }
@@ -109,12 +135,12 @@ namespace Oukanu
             return result;
         }
 
-        public List<ResourcesHolder> GetUnusedResources()
+        public List<CardInstance> GetUnusedResourcesInst()
         {
-            List<ResourcesHolder> resources = new List<ResourcesHolder>();
+            List<CardInstance> resources = new List<CardInstance>();
             for (int i = 0; i < resourcesList.Count; i++)
             {
-                if (!resourcesList[i].isUsed)
+                if (!resourcesList[i].IsFlatfooted)
                 {
                     resources.Add(resourcesList[i]);
                 }
@@ -122,20 +148,17 @@ namespace Oukanu
             return resources;
         }
 
-
         public void MakeAllResourcesUsable()
         {
             for (int i = 0; i < resourcesList.Count; i++)
             {
-                resourcesList[i].isUsed = false;
-                resourcesList[i].cardObj.GetComponent<CardViz>().SetTargetRotation(Vector3.zero);
+                resourcesList[i].SetFlatfooted(false);
             }
             resourcesDropedThisTurn = 0;
         }
 
         public void UseResourceCards(int amount)
         {
-            Vector3 euler = new Vector3(0, 0, 90f);
 
             for (int i = 0; i < amount; i++)
             {
@@ -145,42 +168,41 @@ namespace Oukanu
                     Debug.LogError("OverLoad Resource!");
                     break;
                 }
-                if (resourcesList[i].isUsed)
+                if (resourcesList[i].IsFlatfooted)
                 {
                     amount++;
                     continue;
                 }
-                resourcesList[i].isUsed = true;
-                resourcesList[i].cardObj.GetComponent<CardViz>().SetTargetRotation(euler);
+                resourcesList[i].SetFlatfooted(true);
             }
         }
-        public void DropResourceCard(CardInstance cardInst)
+
+        public void DropResourceCard(CardInstance cardInst, bool registerEvent = true)
         {
-            if (handCards.Contains(cardInst))
-            {
-                handCards.Remove(cardInst);
-            }
-
+            MoveCardFromHolder(cardInst, handCards, resourcesList);
             resourcesDropedThisTurn++;
-            Settings.RegisterEvent(username + " Dropped " + cardInst.viz.Card.name, Color.white);
+            currentHolder.SetCardToResourcesHolder(cardInst);
+            if (registerEvent)
+            {
+                Settings.RegisterEvent(username + " Dropped " + cardInst.viz.Card.name, Color.white);
+            }
+            cardInst.currentLogic = downLogic;
         }
-
 
         public void DropCreatureCard(CardInstance cardInst,bool registerEvent = true)
         {
-            if (handCards.Contains(cardInst))
-            {
-                handCards.Remove(cardInst);
-            }
-
-            downCards.Add(cardInst);
+            MoveCardFromHolder(cardInst, handCards, downCards);
             currentHolder.SetCardDown(cardInst);
 
             if (registerEvent)
             {
                 Settings.RegisterEvent(username + " Dropped " + cardInst.viz.Card.name + " for " + cardInst.viz.Card.cost + " resources", Color.white);
             }
+            cardInst.currentLogic = downLogic;
         }
+
+
+        #endregion
 
         public void ResetAllFlatFootedCards()
         {
@@ -194,6 +216,7 @@ namespace Oukanu
         }
 
 
+        #region DrawCard
         public bool DrawCard(int cardAmounts)
         {
             for (int i = 0; i < cardAmounts; i++)
@@ -201,8 +224,7 @@ namespace Oukanu
                 if (deckCards.Count > 0)
                 {
                     CardInstance c = deckCards[deckCards.Count - 1];
-                    deckCards.Remove(c);
-                    handCards.Add(c);
+                    MoveCardFromHolder(c, deckCards, handCards);
 
                     currentHolder.SetCardToHand(c);
                 }
@@ -219,8 +241,10 @@ namespace Oukanu
         {
             return DrawCard(drawAmountPerTurn);
         }
+        #endregion
 
 
+        #region Shuffle
         public void Shuffle(List<CardInstance> cards)
         {
             for (int i = 0; i < cards.Count; i++)
@@ -267,6 +291,9 @@ namespace Oukanu
                 throw new System.MissingMemberException();
             }
         }
+
+
+        #endregion
 
 
         //Should Be called after assign A stats UI

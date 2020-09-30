@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862616308c62f2944baffcea6027f1ea, type: 3}
   m_Name: Mouse Hold With Card
   m_EditorClassIdentifier: 
-  currentCard: {fileID: 11400000, guid: 1c4f04a5043a1ff40864eb478676ce15, type: 2}
+  currentHouldingCard: {fileID: 11400000, guid: b8040f05f2f02e34d947baec40906bbb,
+    type: 2}
   playerControlState: {fileID: 11400000, guid: 9ec8d35164d6387469c7b3ac1bf3911d, type: 2}
+  blockState: {fileID: 11400000, guid: 9b4f7f36783757a438636b50c755592e, type: 2}
   onPlayerControlState: {fileID: 11400000, guid: aa54cf4d8be2f714f9e5745bf7eaf4c9,
     type: 2}
+  blockPhase: {fileID: 11400000, guid: ae725da8a87999b46a1414ec09164714, type: 2}

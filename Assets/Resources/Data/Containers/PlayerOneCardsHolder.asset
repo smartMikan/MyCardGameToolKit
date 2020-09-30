@@ -17,4 +17,5 @@ MonoBehaviour:
   resourcesCardGrid: {fileID: 11400000, guid: 5ac7610705e12fb439c9ea39f4884c5a, type: 2}
   deckGrid: {fileID: 11400000, guid: 6a684236366006d419688b5b257cc192, type: 2}
   battleLine: {fileID: 11400000, guid: a614f3fbf52b16949af8a707a895f231, type: 2}
-  isP1Holder: 1
+  graveyard: {fileID: 11400000, guid: 8db3f78d44513c2448c4ca3af97235a3, type: 2}
+  isHumanHolder: 1

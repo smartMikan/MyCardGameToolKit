@@ -6,39 +6,41 @@ namespace Oukanu.Objects
     [CreateAssetMenu(menuName = "Areas/DownCardsAreaLogic")]
     public class DownCardAreaLogic : AreaLogic
     {
-        public Variable.CardVariables card;
+        public Variable.CardVariables currentSelectedCard;
         public CardType creatureType;
         public CardType resourceType;
-        public SO.TransformVariable creatureAreaGrid;
-        public SO.TransformVariable resourceAreaGrid;
-        public ObjectsLogic cardDownLogic;
+        public Variable.TransformVariable creatureAreaGrid;
+        public Variable.TransformVariable resourceAreaGrid;
+
+        
 
         public override void Execute()
         {
-            if(card.value == null)
+            if(currentSelectedCard.Value == null)
             {
                 return;
             }
 
-            CardInstance c = card.value;
-            bool canUse = Settings.gameManager.CurrentPlayer.CanUseCard(c.viz.Card);
+            CardInstance cardInstance = currentSelectedCard.Value;
+            bool canUse = Settings.gameManager.CurrentPlayer.CanUseCard(cardInstance.viz.Card);
             if (canUse)
             {
-                if (c.viz.Card.cardType == creatureType)
+                if (cardInstance.viz.Card.cardType == creatureType)
                 {
                     Debug.Log("Place Card Down");
-                    Settings.DropCreatureCard(c.transform, creatureAreaGrid.value.transform, c);
+
+                    cardInstance.owner.UseResourceCards(cardInstance.viz.Card.cost);
+                    cardInstance.owner.DropCreatureCard(cardInstance);
+                    cardInstance.SetFlatfooted(true, true);
                 }
-                else if (c.viz.Card.cardType == resourceType)
+                else if (cardInstance.viz.Card.cardType == resourceType)
                 {
                     Debug.Log("Place Resources Card Down");
-                    Settings.DropResourceCard(c.transform, resourceAreaGrid.value.transform, c);
+                    cardInstance.owner.DropResourceCard(cardInstance);
                 }
 
+                cardInstance.gameObject.SetActive(true);
 
-                
-                c.gameObject.SetActive(true);
-                c.currentLogic = cardDownLogic;
             }
 
            

@@ -40,6 +40,7 @@ namespace Oukanu
                 return;
             }
             Card = c;
+            c.cardViz = this;
 
             c.cardType.OnSetType(this);
 

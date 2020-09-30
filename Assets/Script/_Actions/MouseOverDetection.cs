@@ -13,7 +13,7 @@ namespace Oukanu.GameStates
         public override void Execute(float deltatime)
         {
             
-            List<RaycastResult> results = Settings.GetUIObjs();
+            List<RaycastResult> results = Settings.GetUIObjects();
 
 
             foreach (RaycastResult r in results)

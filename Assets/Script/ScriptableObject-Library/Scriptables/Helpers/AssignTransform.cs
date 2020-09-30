@@ -8,7 +8,7 @@ namespace SA
 {
     public class AssignTransform : MonoBehaviour
     {
-        public TransformVariable transformVariable;
+        public Oukanu.Variable.TransformVariable transformVariable;
 
 		private void Awake()
 		{

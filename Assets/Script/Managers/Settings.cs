@@ -36,7 +36,7 @@ namespace Oukanu
         }
 
 
-        public static List<RaycastResult> GetUIObjs()
+        public static List<RaycastResult> GetUIObjects()
         {
             PointerEventData pointerData = new PointerEventData(EventSystem.current)
             {
@@ -47,38 +47,50 @@ namespace Oukanu
             return results;
         }
 
-        public static void DropCreatureCard(Transform c, Transform p, CardInstance card)
+        
+        public static void SetParentForCard(Transform card, Transform parent, bool withAnim = false)
         {
-            //call set parent in player holder
-            //SetParentForCard(c, p);
-
-            //Execute Any Special ability on drop
-            gameManager.CurrentPlayer.UseResourceCards(card.viz.Card.cost);
-            gameManager.CurrentPlayer.DropCreatureCard(card);
-            card.SetFlatfooted(true);
-        }
-
-        public static void DropResourceCard(Transform c, Transform p, CardInstance card)
-        {
-            SetParentForCard(c, p);
-            gameManager.CurrentPlayer.DropResourceCard(card);
-            gameManager.CurrentPlayer.AddResourceCard(card.gameObject);
-        }
-
-        public static void SetParentForCard(Transform c, Transform p, bool withAnim = false)
-        {
-            if (c.parent == p) return;
-            c.SetParent(p);
-            c.localPosition = Vector3.zero;
+            if (card.parent == parent) return;
+            card.SetParent(parent);
+            card.localPosition = Vector3.zero;
             if (withAnim)
             {
-                c.GetComponent<CardViz>().SetTargetRotation(Vector3.zero);
+                card.GetComponent<CardViz>().SetTargetRotation(Vector3.zero);
             }
             else
             {
-                c.localEulerAngles = Vector3.zero;
+                card.GetComponent<CardViz>().SetTargetRotation(Vector3.zero);
+                card.localEulerAngles = Vector3.zero;
             }
-            c.localScale = Vector3.one;
+            card.localScale = Vector3.one;
+        }
+
+        public static void SetParentForCard(Transform card, Transform parent, Vector3 localPosition, Vector3 eularAngle, bool withAnim = false)
+        {
+            if (card.parent == parent) return;
+            card.SetParent(parent);
+            card.localPosition = localPosition;
+            if (withAnim)
+            {
+                card.GetComponent<CardViz>().SetTargetRotation(eularAngle);
+            }
+            else
+            {
+                card.GetComponent<CardViz>().SetTargetRotation(eularAngle);
+                card.localEulerAngles = eularAngle;
+            }
+            card.localScale = Vector3.one;
+        }
+
+
+        public static void SetCardToBlockPos(Transform card, Transform parent, int count)
+        {
+            Vector3 blockPosition = Vector3.zero;
+
+            blockPosition.x -= 150 * count;
+            blockPosition.y += 150 * count;
+
+            SetParentForCard(card, parent, blockPosition, new Vector3(0, 0, 180));
         }
 
 

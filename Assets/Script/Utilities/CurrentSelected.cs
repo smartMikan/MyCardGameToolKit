@@ -22,8 +22,8 @@ namespace Oukanu
             }
 
 
-            currentCard.value.gameObject.SetActive(false);
-            cardViz.LoadCard(currentCard.value.viz.Card);
+            currentCard.Value.gameObject.SetActive(false);
+            cardViz.LoadCard(currentCard.Value.viz.Card);
             cardViz.gameObject.SetActive(true);
         }
 

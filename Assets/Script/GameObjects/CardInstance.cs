@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,10 @@ namespace Oukanu
         public CardViz viz;
         public Objects.ObjectsLogic currentLogic;
 
-		public bool IsFlatfooted { get; private set; }
+        public bool IsFlatfooted { get; private set; }
+        
+        [System.NonSerialized]
+        public List<CardInstance> currentBelongs;
 
         private void Awake()
         {
@@ -39,13 +43,27 @@ namespace Oukanu
             currentLogic.OnHighlight(this);
         }
 
-        public void CardInstanceToGraveyard()
+        public void SetOnBattleLine()
         {
-            Debug.Log("card to graveyard");
+            owner.MoveCardFromHolder(this, currentBelongs, owner.attackingCards);
+            owner.currentHolder.SetCardOnBattleLine(this);
         }
 
+        public void CardInstanceToGraveyard()
+        {
+            owner.MoveCardToGraveyard(this, currentBelongs);
+            //some special effect when goes to graveyard 
+        }
 
-        public bool CanBeBlocked(CardInstance block)
+        public void BackToDownGrid()
+        {
+            owner.MoveCardFromHolder(this, currentBelongs, owner.downCards);
+            //
+            owner.currentHolder.SetCardDown(this);
+        }
+
+        //check if this card is in an attack state and can be block by cardinstance"block"
+        public bool CanBeBlocked(CardInstance block,ref int count)
         {
             bool result = owner.attackingCards.Contains(this);
 
@@ -59,11 +77,9 @@ namespace Oukanu
 
                 if (result)
                 {
-                    Settings.gameManager.AddBlockInstance(this, block);
+                    //can block, create a block instance to handle in resolve phase
+                    Settings.gameManager.AddBlockInstance(this, block,ref count);
                 }
-
-
-
                 return result;
             }
             else
@@ -90,15 +106,24 @@ namespace Oukanu
         }
 
 
-        public void SetFlatfooted(bool isFlat)
+        public void SetFlatfooted(bool isFlat,bool withanim = false)
         {
             IsFlatfooted = isFlat;
             if (IsFlatfooted)
             {
+                if (!withanim)
+                {
+
+                    viz.transform.localEulerAngles = new Vector3(0, 0, 90);
+                }
                 viz.SetTargetRotation(new Vector3(0, 0, 90));
             }
             else
             {
+                if (!withanim)
+                {
+                    viz.transform.localEulerAngles = Vector3.zero;
+                }
                 viz.SetTargetRotation(Vector3.zero);
             }
         }

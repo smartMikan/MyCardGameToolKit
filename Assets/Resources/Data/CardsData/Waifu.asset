@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Waifu
   m_EditorClassIdentifier: 
   cardType: {fileID: 11400000, guid: 32a28df3d8349404bb6d50d395239c75, type: 2}
-  cost: 3
+  cost: 1
   properties:
   - stringValue: Waifu
     intValue: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: e676bac4019471047ae1fb3875aaa160, type: 3}
     element: {fileID: 11400000, guid: 536fc9dff63b0d14c9eaebaba61f2843, type: 2}
   - stringValue: Resources Cost
-    intValue: 3
+    intValue: 1
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: 18acbbb5256e1404896cc7c78c04859a, type: 2}
   - stringValue: Attack
@@ -44,6 +44,6 @@ MonoBehaviour:
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: a15cbe9a090f5974bb5398d22418fbc4, type: 2}
   - stringValue: Defence
-    intValue: 50
+    intValue: 4
     sprite: {fileID: 0}
     element: {fileID: 11400000, guid: 92c49789eb3675b48b947f47cbad77c3, type: 2}

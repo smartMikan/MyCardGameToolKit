@@ -7,19 +7,27 @@ namespace Oukanu
     [CreateAssetMenu(menuName = "Turns/PlayerControlPhase")]
     public class PlayerControlPhase : Phase
     {
-
         public GameStates.State playerControlState;
 
         public override bool IsComplete()
         {
-            if(forceExit)
+            if (forceExit)
             {
                 forceExit = false;
                 return true;
             }
             return false;
         }
+        public override void OnEndPhase()
+        {
+            if (isInit)
+            {
+                Debug.Log(this.name + " End");
+                Settings.gameManager.SetState(null);
+                isInit = false;
+            }
 
+        }
 
         public override void OnStartPhase()
         {
@@ -30,20 +38,14 @@ namespace Oukanu
                 Settings.gameManager.onPhaseChanged.Raise();
                 isInit = true;
             }
+
+           
         }
 
 
-        public override void OnEndPhase()
-        {
-            if (isInit)
-            {
-                Debug.Log(this.name + " End");
-                Settings.gameManager.SetState(null);
-                isInit = false;
-            }
-        }
 
-       
+
+
     }
 
 }
